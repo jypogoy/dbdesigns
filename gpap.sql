@@ -56,13 +56,14 @@ CREATE TABLE `batch` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `zip_id` bigint(11) unsigned NOT NULL,
   `trans_type_id` tinyint(3) unsigned NOT NULL,
+  `is_completed` bit(1) DEFAULT b'0',
   `created_by` varchar(25) DEFAULT 'SYSTEM',
   PRIMARY KEY (`id`,`zip_id`,`trans_type_id`),
   KEY `fk_order_batch1_idx` (`zip_id`),
   KEY `fk_order_trans_type1_idx` (`trans_type_id`),
   CONSTRAINT `fk_order_batch1` FOREIGN KEY (`zip_id`) REFERENCES `zip` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_trans_type1` FOREIGN KEY (`trans_type_id`) REFERENCES `transaction_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +72,7 @@ CREATE TABLE `batch` (
 
 LOCK TABLES `batch` WRITE;
 /*!40000 ALTER TABLE `batch` DISABLE KEYS */;
-INSERT INTO `batch` VALUES (1,1,1,'SYSTEM');
+INSERT INTO `batch` VALUES (1,1,2,'\0','3'),(2,1,2,'\0','3'),(3,1,2,'\0','3');
 /*!40000 ALTER TABLE `batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +150,7 @@ CREATE TABLE `demographic` (
 
 LOCK TABLES `demographic` WRITE;
 /*!40000 ALTER TABLE `demographic` DISABLE KEYS */;
-INSERT INTO `demographic` VALUES (1,'019','19','002','001','000','0000000000000001','R','4411','MOP','TEST - PIONEER WOODLANDS        ','FLAT, FLOOR, BLOCK              ','BUILDING                        ','STREET                          ','MACAU                       ','MO','00000    ','M','0001234567','N','N','Y','N','N','Y','Y','Y','N','Y','admin','2018-03-22 08:51:40'),(2,'019','19','002','001','000','0000000000000004','P','5099','MOP','DUMMY ACCOUNT 4                 ','111 FLOOR                       ','UNIT 299                        ','MAY STREET                      ','MACAU                       ','MO','0000     ','C','0001111111','N','N','Y','N','N','Y','Y','Y','N','Y','admin','2018-03-22 08:51:40'),(3,'088','88','001','001','000','0000000000000444','P','5999','HKD','HK COPY PROTOTYPE               ','                                ','ABC                             ','                                ','*                           ','HK','         ',' ','0012345678','Y','N','Y','N','N','N','N','Y','N','Y','admin','2018-03-22 08:51:40'),(4,'019','19','001','001','000','0000000000006010','P','6010','MOP','PROTOTYPE CASH ADVANCE          ','                                ','*                               ','                                ','MACAU                       ','MO','00000    ','E','0000123456','N','N','N','Y','N','N','N','Y','N','Y','admin','2018-03-22 08:51:40'),(5,'088','88','001','001','000','0000000000008205','O','5969','HKD','MAS RTI PROD TEST - BUCKET      ','PHYS ADDR1                      ','PHYS ADDR2                      ','PHYS ADD3                       ','KOWLOON                     ','HK','000000000','C','1231231231','N','N','Y','N','N','N','N','Y','N','Y','admin','2018-03-22 08:51:40'),(6,'019','19','001','001','000','0000000000008206','R','5969','MOP','MAS RTI TEST - 19               ','PHYS ADDR 1                     ','PHYSC ADDR 2                    ','PHYS ADDR 3                     ','KOWLOON                     ','HK','000000000','C','1111111111','N','C','Y','N','N','N','N','Y','N','Y','admin','2018-03-22 08:51:40');
+INSERT INTO `demographic` VALUES (1,'019','19','002','001','000','0000000000000001','R','4411','MOP','TEST - PIONEER WOODLANDS        ','FLAT, FLOOR, BLOCK              ','BUILDING                        ','STREET                          ','MACAU                       ','MO','00000    ','M','0001234567','N','N','Y','N','N','Y','Y','Y','N','Y','1','2018-03-23 04:02:15'),(2,'019','19','002','001','000','0000000000000004','P','5099','MOP','DUMMY ACCOUNT 4                 ','111 FLOOR                       ','UNIT 299                        ','MAY STREET                      ','MACAU                       ','MO','0000     ','C','0001111111','N','N','Y','N','N','Y','Y','Y','N','Y','1','2018-03-23 04:02:15'),(3,'088','88','001','001','000','0000000000000444','P','5999','HKD','HK COPY PROTOTYPE               ','                                ','ABC                             ','                                ','*                           ','HK','         ',' ','0012345678','Y','N','Y','N','N','N','N','Y','N','Y','1','2018-03-23 04:02:15'),(4,'019','19','001','001','000','0000000000006010','P','6010','MOP','PROTOTYPE CASH ADVANCE          ','                                ','*                               ','                                ','MACAU                       ','MO','00000    ','E','0000123456','N','N','N','Y','N','N','N','Y','N','Y','1','2018-03-23 04:02:15'),(5,'088','88','001','001','000','0000000000008205','O','5969','HKD','MAS RTI PROD TEST - BUCKET      ','PHYS ADDR1                      ','PHYS ADDR2                      ','PHYS ADD3                       ','KOWLOON                     ','HK','000000000','C','1231231231','N','N','Y','N','N','N','N','Y','N','Y','1','2018-03-23 04:02:15'),(6,'019','19','001','001','000','0000000000008206','R','5969','MOP','MAS RTI TEST - 19               ','PHYS ADDR 1                     ','PHYSC ADDR 2                    ','PHYS ADDR 3                     ','KOWLOON                     ','HK','000000000','C','1111111111','N','C','Y','N','N','N','N','Y','N','Y','1','2018-03-23 04:02:15');
 /*!40000 ALTER TABLE `demographic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,14 +193,14 @@ CREATE TABLE `image` (
   `trans_type_id` tinyint(3) unsigned NOT NULL,
   `batch_id` bigint(11) unsigned DEFAULT NULL,
   `is_start` bit(1) DEFAULT b'0',
-  `is_locked` bit(1) DEFAULT b'0',
+  `is_completed` bit(1) DEFAULT b'0',
   `created_by` varchar(25) DEFAULT 'SYSTEM',
   PRIMARY KEY (`id`),
   KEY `fk_image_batch1_idx` (`zip_id`),
   KEY `fk_image_batch1_idx1` (`batch_id`),
   CONSTRAINT `fk_image_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_image_zip1` FOREIGN KEY (`zip_id`) REFERENCES `zip` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,7 +209,7 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
-INSERT INTO `image` VALUES (1,'/BN/20100101-1-001/Airline/scan0001-5.tif',NULL,1,2,NULL,'\0','\0','1'),(2,'/BN/20100101-1-001/Airline/scan0002.tif',NULL,1,2,NULL,'\0','\0','1'),(3,'/BN/20100101-1-001/Airline/scan0003.tif',NULL,1,2,NULL,'\0','\0','1'),(4,'/BN/20100101-1-001/Airline/scan0004-10.tif',NULL,1,2,NULL,'\0','\0','1'),(5,'/BN/20100101-1-001/Airline/scan0010-10.tif',NULL,1,2,NULL,'\0','\0','1'),(6,'/BN/20100101-1-001/Airline/scan0011.tif',NULL,1,2,NULL,'\0','\0','1');
+INSERT INTO `image` VALUES (1,'/BN/20100101-1-001/Airline/scan0001-5.tif',NULL,1,2,1,'','','3'),(2,'/BN/20100101-1-001/Airline/scan0002.tif',NULL,1,2,1,'\0','','3'),(3,'/BN/20100101-1-001/Airline/scan0003.tif',NULL,1,2,2,'','','3'),(4,'/BN/20100101-1-001/Airline/scan0004-10.tif',NULL,1,2,2,'\0','','3'),(5,'/BN/20100101-1-001/Airline/scan0010-10.tif',NULL,1,2,3,'','','3'),(6,'/BN/20100101-1-001/Airline/scan0011.tif',NULL,1,2,3,'\0','','3'),(26,'/BN/20100101-1-001/Credit/scan0001-5.tif',NULL,1,3,NULL,'\0','\0','1'),(27,'/BN/20100101-1-001/Credit/scan0002.tif',NULL,1,3,NULL,'\0','\0','1'),(28,'/BN/20100101-1-001/Credit/scan0003.tif',NULL,1,3,NULL,'\0','\0','1'),(29,'/BN/20100101-1-001/Credit/scan0004-10.tif',NULL,1,3,NULL,'\0','\0','1'),(30,'/BN/20100101-1-001/Credit/scan0010-10.tif',NULL,1,3,NULL,'\0','\0','1'),(31,'/BN/20100101-1-001/Credit/scan0011.tif',NULL,1,3,NULL,'\0','\0','1');
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,10 +224,10 @@ CREATE TABLE `index` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `image_id` bigint(20) unsigned NOT NULL,
   `is_start` bit(1) DEFAULT b'0',
-  `is_locked` bit(1) DEFAULT b'0',
+  `is_completed` bit(1) DEFAULT b'0',
   `created_by` varchar(25) DEFAULT 'SYSTEM',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +236,7 @@ CREATE TABLE `index` (
 
 LOCK TABLES `index` WRITE;
 /*!40000 ALTER TABLE `index` DISABLE KEYS */;
-INSERT INTO `index` VALUES (1,1,'','','1'),(2,2,'','','1'),(3,3,'\0','','1'),(4,4,'\0','','1'),(5,5,'\0','','1'),(6,6,'\0','','1'),(8,1,'\0','','2'),(9,2,'\0','','2'),(10,3,'','','2'),(11,4,'','','2'),(12,5,'\0','','2'),(13,6,'\0','','2');
+INSERT INTO `index` VALUES (1,1,'','','1'),(2,2,'\0','','1'),(3,3,'','','1'),(4,4,'\0','','1'),(5,5,'','','1'),(6,6,'\0','','1'),(8,1,'','','2'),(9,2,'\0','','2'),(10,3,'','','2'),(11,4,'\0','','2'),(12,5,'','','2'),(13,6,'\0','','2'),(15,26,'','','1'),(16,27,'\0','','1'),(17,28,'\0','','1'),(18,29,'','','1'),(19,30,'\0','','1'),(20,31,'\0','','1');
 /*!40000 ALTER TABLE `index` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -384,7 +385,7 @@ CREATE TABLE `role` (
   `createStatus` enum('ACTIVE','INACTIVE','DELETED') NOT NULL DEFAULT 'ACTIVE',
   `createdBy` varchar(32) NOT NULL DEFAULT 'SYSTEM',
   PRIMARY KEY (`roleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -393,7 +394,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'Admin','ACTIVE','SYSTEM'),(2,'Indexer','ACTIVE','SYSTEM');
+INSERT INTO `role` VALUES (1,'Admin','ACTIVE','SYSTEM'),(2,'Indexer','ACTIVE','SYSTEM'),(3,'Comparer','ACTIVE','SYSTEM');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,7 +486,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-22 08:51:35',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-22 14:08:25',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-22 13:23:29',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','usertest','usertest','usertest','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-22 13:25:38',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin'),(5,'4','sadasd','adawda','casd','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-20 07:10:59',0,'2018-03-20 07:08:12','test@test.com','asasdasdwdawd','ACTIVE','admin'),(6,'5','sadasd','adawda','casd','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-20 07:10:59',0,'2018-03-20 07:08:12','test@test.com','asasdasdwdawd','ACTIVE','SYSTEM'),(7,'6','sadasd','adawda','casd','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-20 07:10:59',0,'2018-03-20 07:08:12','test@test.com','asasdasdwdawd','ACTIVE','SYSTEM'),(8,'7','sadasd','adawda','casd','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-20 07:10:59',0,'2018-03-20 07:08:12','test@test.com','asasdasdwdawd','ACTIVE','SYSTEM'),(9,'8','sadasd','adawda','casd','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-20 07:10:59',0,'2018-03-20 07:08:12','test@test.com','asasdasdwdawd','ACTIVE','SYSTEM'),(10,'9','sadasd','adawda','casd','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-20 07:10:59',0,'2018-03-20 07:08:12','test@test.com','asasdasdwdawd','ACTIVE','SYSTEM'),(11,'10','sadasd','adawda','casd','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-20 07:10:59',0,'2018-03-20 07:08:12','test@test.com','asasdasdwdawd','ACTIVE','SYSTEM');
+INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-23 11:58:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-23 11:59:38',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-23 11:58:22',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-23 11:59:41',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -543,7 +544,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1,1,'ACTIVE','SYSTEM'),(2,2,2,'ACTIVE','admin'),(3,3,2,'ACTIVE','admin'),(4,4,2,'ACTIVE','admin');
+INSERT INTO `user_role` VALUES (1,1,1,'ACTIVE','SYSTEM'),(2,2,2,'ACTIVE','SYSTEM'),(3,3,2,'ACTIVE','SYSTEM'),(4,4,3,'ACTIVE','SYSTEM');
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -565,7 +566,7 @@ CREATE TABLE `zip` (
   KEY `fk_batch_user1_idx` (`created_by`),
   KEY `fk_batch_region1_idx` (`region_code`),
   CONSTRAINT `fk_batch_region1` FOREIGN KEY (`region_code`) REFERENCES `region` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -574,7 +575,7 @@ CREATE TABLE `zip` (
 
 LOCK TABLES `zip` WRITE;
 /*!40000 ALTER TABLE `zip` DISABLE KEYS */;
-INSERT INTO `zip` VALUES (1,'BN','2010-01-01',1,1,'1'),(2,'BN','2010-01-01',3,1,'3'),(3,'HK','2018-01-01',2,3,'1');
+INSERT INTO `zip` VALUES (1,'BN','2010-01-01',1,1,'1'),(2,'BN','2010-01-01',3,1,'1'),(3,'HK','2018-01-01',2,3,'1'),(4,'PH','2010-01-01',1,1,'1');
 /*!40000 ALTER TABLE `zip` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -595,4 +596,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-22 22:14:10
+-- Dump completed on 2018-03-23 22:05:44
