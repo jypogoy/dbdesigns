@@ -200,7 +200,7 @@ CREATE TABLE `image` (
   KEY `fk_image_batch1_idx1` (`batch_id`),
   CONSTRAINT `fk_image_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_image_zip1` FOREIGN KEY (`zip_id`) REFERENCES `zip` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +209,7 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
-INSERT INTO `image` VALUES (1,'/BN/20100101-1-001/Airline/scan0001-5.tif',NULL,1,2,1,'','','3'),(2,'/BN/20100101-1-001/Airline/scan0002.tif',NULL,1,2,1,'\0','','3'),(3,'/BN/20100101-1-001/Airline/scan0003.tif',NULL,1,2,2,'','','3'),(4,'/BN/20100101-1-001/Airline/scan0004-10.tif',NULL,1,2,2,'\0','','3'),(5,'/BN/20100101-1-001/Airline/scan0010-10.tif',NULL,1,2,3,'','','3'),(6,'/BN/20100101-1-001/Airline/scan0011.tif',NULL,1,2,3,'\0','','3'),(26,'/BN/20100101-1-001/Credit/scan0001-5.tif',NULL,1,3,NULL,'\0','\0','1'),(27,'/BN/20100101-1-001/Credit/scan0002.tif',NULL,1,3,NULL,'\0','\0','1'),(28,'/BN/20100101-1-001/Credit/scan0003.tif',NULL,1,3,NULL,'\0','\0','1'),(29,'/BN/20100101-1-001/Credit/scan0004-10.tif',NULL,1,3,NULL,'\0','\0','1'),(30,'/BN/20100101-1-001/Credit/scan0010-10.tif',NULL,1,3,NULL,'\0','\0','1'),(31,'/BN/20100101-1-001/Credit/scan0011.tif',NULL,1,3,NULL,'\0','\0','1');
+INSERT INTO `image` VALUES (1,'/BN/20100101-1-001/Airline/scan0001-5.tif',NULL,1,2,1,'','','3'),(2,'/BN/20100101-1-001/Airline/scan0002.tif',NULL,1,2,1,'\0','','3'),(3,'/BN/20100101-1-001/Airline/scan0003.tif',NULL,1,2,2,'','','3'),(4,'/BN/20100101-1-001/Airline/scan0004-10.tif',NULL,1,2,2,'\0','','3'),(5,'/BN/20100101-1-001/Airline/scan0010-10.tif',NULL,1,2,3,'','','3'),(6,'/BN/20100101-1-001/Airline/scan0011.tif',NULL,1,2,3,'\0','','3'),(26,'/BN/20100101-1-001/Credit/scan0001-5.tif',NULL,1,3,NULL,'\0','\0','1'),(27,'/BN/20100101-1-001/Credit/scan0002.tif',NULL,1,3,NULL,'\0','\0','1'),(28,'/BN/20100101-1-001/Credit/scan0003.tif',NULL,1,3,NULL,'\0','\0','1'),(29,'/BN/20100101-1-001/Credit/scan0004-10.tif',NULL,1,3,NULL,'\0','\0','1'),(30,'/BN/20100101-1-001/Credit/scan0010-10.tif',NULL,1,3,NULL,'\0','\0','1'),(31,'/BN/20100101-1-001/Credit/scan0011.tif',NULL,1,3,NULL,'\0','\0','1'),(33,'/BN/20100101-3-001/Airline/scan0001-5.tif',NULL,2,2,NULL,'\0','\0','1'),(34,'/BN/20100101-3-001/Airline/scan0002.tif',NULL,2,2,NULL,'\0','\0','1'),(35,'/BN/20100101-3-001/Airline/scan0003.tif',NULL,2,2,NULL,'\0','\0','1'),(36,'/BN/20100101-3-001/Airline/scan0004-10.tif',NULL,2,2,NULL,'\0','\0','1'),(37,'/BN/20100101-3-001/Airline/scan0010-10.tif',NULL,2,2,NULL,'\0','\0','1'),(38,'/BN/20100101-3-001/Airline/scan0011.tif',NULL,2,2,NULL,'\0','\0','1'),(40,'/BN/20100101-3-001/Credit/scan0001-5.tif',NULL,2,3,NULL,'\0','\0','2'),(41,'/BN/20100101-3-001/Credit/scan0002.tif',NULL,2,3,NULL,'\0','\0','2'),(42,'/BN/20100101-3-001/Credit/scan0003.tif',NULL,2,3,NULL,'\0','\0','2'),(43,'/BN/20100101-3-001/Credit/scan0004-10.tif',NULL,2,3,NULL,'\0','\0','2'),(44,'/BN/20100101-3-001/Credit/scan0010-10.tif',NULL,2,3,NULL,'\0','\0','2'),(45,'/BN/20100101-3-001/Credit/scan0011.tif',NULL,2,3,NULL,'\0','\0','2'),(47,'/HK/20180101-2-003/Normal Purchase/Scan0001.tif',NULL,3,1,NULL,'\0','\0','1'),(48,'/BN/20100101-2-001/Airline/scan0001-5.tif',NULL,5,2,NULL,'\0','\0','1'),(49,'/BN/20100101-2-001/Airline/scan0002.tif',NULL,5,2,NULL,'\0','\0','1'),(50,'/BN/20100101-2-001/Airline/scan0003.tif',NULL,5,2,NULL,'\0','\0','1'),(51,'/BN/20100101-2-001/Airline/scan0004-10.tif',NULL,5,2,NULL,'\0','\0','1'),(52,'/BN/20100101-2-001/Airline/scan0010-10.tif',NULL,5,2,NULL,'\0','\0','1'),(53,'/BN/20100101-2-001/Airline/scan0011.tif',NULL,5,2,NULL,'\0','\0','1'),(55,'/BN/20100101-2-001/Credit/scan0001-5.tif',NULL,5,3,NULL,'\0','\0','1'),(56,'/BN/20100101-2-001/Credit/scan0002.tif',NULL,5,3,NULL,'\0','\0','1'),(57,'/BN/20100101-2-001/Credit/scan0003.tif',NULL,5,3,NULL,'\0','\0','1'),(58,'/BN/20100101-2-001/Credit/scan0004-10.tif',NULL,5,3,NULL,'\0','\0','1'),(59,'/BN/20100101-2-001/Credit/scan0010-10.tif',NULL,5,3,NULL,'\0','\0','1'),(60,'/BN/20100101-2-001/Credit/scan0011.tif',NULL,5,3,NULL,'\0','\0','1');
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +227,7 @@ CREATE TABLE `index` (
   `is_completed` bit(1) DEFAULT b'0',
   `created_by` varchar(25) DEFAULT 'SYSTEM',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,8 +236,32 @@ CREATE TABLE `index` (
 
 LOCK TABLES `index` WRITE;
 /*!40000 ALTER TABLE `index` DISABLE KEYS */;
-INSERT INTO `index` VALUES (1,1,'','','1'),(2,2,'\0','','1'),(3,3,'','','1'),(4,4,'\0','','1'),(5,5,'','','1'),(6,6,'\0','','1'),(8,1,'','','2'),(9,2,'\0','','2'),(10,3,'','','2'),(11,4,'\0','','2'),(12,5,'','','2'),(13,6,'\0','','2'),(15,26,'','','1'),(16,27,'\0','','1'),(17,28,'\0','','1'),(18,29,'','','1'),(19,30,'\0','','1'),(20,31,'\0','','1');
+INSERT INTO `index` VALUES (1,1,'','','1'),(2,2,'\0','','1'),(3,3,'','','1'),(4,4,'\0','','1'),(5,5,'','','1'),(6,6,'\0','','1'),(8,1,'','','2'),(9,2,'\0','','2'),(10,3,'','','2'),(11,4,'\0','','2'),(12,5,'','','2'),(13,6,'\0','','2'),(15,26,'','','1'),(16,27,'\0','','1'),(17,28,'\0','','1'),(18,29,'','','1'),(19,30,'\0','','1'),(20,31,'\0','','1'),(22,33,'','','1'),(23,34,'\0','','1'),(24,35,'\0','','1'),(25,36,'','','1'),(26,37,'\0','','1'),(27,38,'\0','','1'),(29,40,'','','2'),(30,41,'\0','','2'),(31,42,'','','2'),(32,43,'\0','','2'),(33,44,'\0','','2'),(34,45,'','','2'),(36,33,'','','2'),(37,34,'\0','','2'),(38,35,'','','2'),(39,36,'\0','','2'),(40,37,'\0','','2'),(41,38,'','','2'),(43,26,'','','2'),(44,27,'\0','','2'),(45,28,'','','2'),(46,29,'\0','','2'),(47,30,'\0','','2'),(48,31,'','','2'),(50,47,'','\0','1'),(51,48,'','\0','1'),(52,49,'\0','\0','1'),(53,50,'\0','\0','1'),(54,51,'\0','\0','1'),(55,52,'','\0','1'),(56,53,'\0','\0','1'),(58,48,'\0','','2'),(59,49,'','','2'),(60,50,'\0','','2'),(61,51,'','','2'),(62,52,'\0','','2'),(63,53,'','','2'),(65,55,'','\0','1'),(66,56,'\0','\0','1'),(67,57,'\0','\0','1'),(68,58,'\0','\0','1'),(69,59,'\0','\0','1'),(70,60,'\0','\0','1');
 /*!40000 ALTER TABLE `index` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `installment_months`
+--
+
+DROP TABLE IF EXISTS `installment_months`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `installment_months` (
+  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `installment_months`
+--
+
+LOCK TABLES `installment_months` WRITE;
+/*!40000 ALTER TABLE `installment_months` DISABLE KEYS */;
+INSERT INTO `installment_months` VALUES (1,'2 Months'),(2,'3 Months'),(3,'4 Months'),(4,'6 Months'),(5,'8 Months'),(6,'9 Months'),(7,'10 Months'),(8,'11 Months'),(9,'12 Months'),(10,'13 Months'),(11,'14 Months'),(12,'15 Months'),(13,'17 Months'),(14,'18 Months'),(15,'19 Months'),(16,'21 Months'),(17,'22 Months'),(18,'23 Months'),(19,'24 Months'),(20,'25 Months'),(21,'30 Months'),(22,'33 Months'),(23,'36 Months'),(24,'48 Months'),(25,'60 Months');
+/*!40000 ALTER TABLE `installment_months` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -292,6 +316,67 @@ INSERT INTO `merchant` VALUES (1,NULL,'19',NULL,NULL,NULL,'0000000000000001','R'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `merchant_header`
+--
+
+DROP TABLE IF EXISTS `merchant_header`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `merchant_header` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `batch_id` bigint(11) unsigned NOT NULL,
+  `merchant_number` char(16) DEFAULT NULL,
+  `merchant_name` varchar(250) DEFAULT NULL,
+  `currency_id` tinyint(3) unsigned DEFAULT NULL,
+  `dcn` char(7) DEFAULT NULL,
+  `deposit_date` date DEFAULT NULL,
+  `deposit_amount` varchar(13) DEFAULT NULL,
+  `pull_reason_id` tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`,`batch_id`),
+  KEY `fk_batch_header_currency1_idx` (`currency_id`),
+  KEY `fk_batch_header_pull_reason1_idx` (`pull_reason_id`),
+  KEY `fk_merchant_header_batch1_idx` (`batch_id`),
+  CONSTRAINT `fk_batch_header_currency1` FOREIGN KEY (`currency_id`) REFERENCES `currency` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_batch_header_pull_reason1` FOREIGN KEY (`pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_merchant_header_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `merchant_header`
+--
+
+LOCK TABLES `merchant_header` WRITE;
+/*!40000 ALTER TABLE `merchant_header` DISABLE KEYS */;
+INSERT INTO `merchant_header` VALUES (1,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000265','2018-03-28','520.00',1),(3,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000004','2018-03-28','4.00',NULL),(4,1,NULL,NULL,NULL,NULL,NULL,NULL,1),(5,1,'0000000000000444','HK COPY PROTOTYPE               ',NULL,'0000000',NULL,NULL,2),(6,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(14,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(16,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(17,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(18,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(21,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(22,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000065','2018-03-28','654.00',NULL),(23,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(24,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(25,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(26,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(27,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000032','2018-03-28','32.00',NULL),(28,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000032','2018-03-28','32.00',NULL),(29,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000005','2018-03-28','5.00',NULL),(30,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000005','2018-03-28','5.00',NULL),(31,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000005','2018-03-28','5.00',NULL),(32,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-02-01','2.00',NULL),(33,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-02-01','2.00',NULL),(34,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-02-01','2.00',NULL),(35,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-02-01','2.00',NULL),(36,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000002','2018-03-28','2.00',NULL),(37,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000002','2018-03-28','2.00',NULL),(38,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000002','2018-03-28','2.00',NULL),(39,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000002','2018-03-28','2.00',NULL),(40,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(41,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(42,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(43,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(44,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(45,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000005','2018-03-28','6565.00',NULL);
+/*!40000 ALTER TABLE `merchant_header` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `other_exception`
+--
+
+DROP TABLE IF EXISTS `other_exception`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `other_exception` (
+  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `other_exception`
+--
+
+LOCK TABLES `other_exception` WRITE;
+/*!40000 ALTER TABLE `other_exception` DISABLE KEYS */;
+INSERT INTO `other_exception` VALUES (1,'Merchant Number'),(2,'Currency Code'),(3,'DCN'),(4,'Trailer Batch Amount'),(5,'Transaction Type'),(6,'Region'),(7,'Card Number'),(8,'Transaction Date'),(9,'Authorization Code'),(10,'Transaction Amount'),(11,'Installment Months'),(12,'Airline Ticket Number'),(13,'Customer Reference Identifier'),(14,'Merchant Order Number'),(15,'Commodity Code'),(16,'Others');
+/*!40000 ALTER TABLE `other_exception` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pull_reason`
 --
 
@@ -329,6 +414,7 @@ CREATE TABLE `region` (
   `name` varchar(45) DEFAULT NULL,
   `created_by` varchar(25) NOT NULL,
   PRIMARY KEY (`code`,`created_by`),
+  UNIQUE KEY `code_UNIQUE` (`code`),
   KEY `fk_region_user1_idx` (`created_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -422,7 +508,56 @@ CREATE TABLE `task` (
 
 LOCK TABLES `task` WRITE;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
+INSERT INTO `task` VALUES (6,'Indexing 1',NULL,''),(7,'Indexing 2',NULL,''),(8,'Indexing Compare',NULL,''),(9,'Entry 1',NULL,''),(10,'Verify',NULL,'');
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `transaction`
+--
+
+DROP TABLE IF EXISTS `transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `transaction` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '	',
+  `merchant_header_id` bigint(11) unsigned NOT NULL,
+  `sequence` tinyint(3) NOT NULL,
+  `transaction_type_id` tinyint(3) unsigned NOT NULL,
+  `region_code` char(2) DEFAULT NULL,
+  `card_number` varchar(19) DEFAULT NULL,
+  `transaction_date` date DEFAULT NULL,
+  `authorization_code` char(6) DEFAULT NULL,
+  `transaction_amount` tinyint(9) DEFAULT NULL,
+  `installment_months_id` tinyint(2) unsigned DEFAULT NULL,
+  `airline_ticket_number` varchar(13) DEFAULT NULL,
+  `customer_reference_identifier` varchar(17) DEFAULT NULL,
+  `merchant_order_number` varchar(25) DEFAULT NULL,
+  `commodity_code` char(4) DEFAULT NULL,
+  `pull_reason_id` tinyint(3) unsigned DEFAULT NULL,
+  `exception_id` tinyint(2) unsigned DEFAULT NULL,
+  `variance_exception` bit(1) DEFAULT NULL,
+  `other_exception_detail` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`,`merchant_header_id`,`transaction_type_id`),
+  KEY `fk_transaction_merchant_header1_idx` (`merchant_header_id`),
+  KEY `fk_transaction_transaction_type1_idx` (`transaction_type_id`),
+  KEY `fk_transaction_pull_reason1_idx` (`pull_reason_id`),
+  KEY `fk_transaction_installment_months1_idx` (`installment_months_id`),
+  CONSTRAINT `fk_transaction_installment_months1` FOREIGN KEY (`installment_months_id`) REFERENCES `installment_months` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_transaction_merchant_header1` FOREIGN KEY (`merchant_header_id`) REFERENCES `merchant_header` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_transaction_pull_reason1` FOREIGN KEY (`pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_transaction_transaction_type1` FOREIGN KEY (`transaction_type_id`) REFERENCES `transaction_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transaction`
+--
+
+LOCK TABLES `transaction` WRITE;
+/*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
+INSERT INTO `transaction` VALUES (1,43,0,1,'F',NULL,'2018-03-28','000002',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(2,44,0,1,'PH',NULL,'2018-03-28','000002',2,NULL,NULL,NULL,NULL,NULL,9,NULL,'',NULL),(3,44,0,4,'PH',NULL,'2018-03-28','000003',3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(4,45,1,1,'PH',NULL,'2018-03-28','000005',5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(5,45,2,4,'D',NULL,'2018-03-28','000002',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL);
+/*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -486,7 +621,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-23 11:58:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-23 11:59:38',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-23 11:58:22',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-23 11:59:41',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin');
+INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-27 09:46:49',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-27 07:49:00',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-27 05:19:41',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -566,7 +701,7 @@ CREATE TABLE `zip` (
   KEY `fk_batch_user1_idx` (`created_by`),
   KEY `fk_batch_region1_idx` (`region_code`),
   CONSTRAINT `fk_batch_region1` FOREIGN KEY (`region_code`) REFERENCES `region` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -575,7 +710,7 @@ CREATE TABLE `zip` (
 
 LOCK TABLES `zip` WRITE;
 /*!40000 ALTER TABLE `zip` DISABLE KEYS */;
-INSERT INTO `zip` VALUES (1,'BN','2010-01-01',1,1,'1'),(2,'BN','2010-01-01',3,1,'1'),(3,'HK','2018-01-01',2,3,'1'),(4,'PH','2010-01-01',1,1,'1');
+INSERT INTO `zip` VALUES (1,'BN','2010-01-01',1,1,'1'),(2,'BN','2010-01-01',3,1,'1'),(3,'HK','2018-01-01',2,3,'1'),(4,'PH','2010-01-01',1,1,'1'),(5,'BN','2010-01-01',2,1,'1');
 /*!40000 ALTER TABLE `zip` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -596,4 +731,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-23 22:05:44
+-- Dump completed on 2018-03-28 21:49:41
