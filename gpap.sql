@@ -16,36 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `activity`
---
-
-DROP TABLE IF EXISTS `activity`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `activity` (
-  `Id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
-  `activityTaskId` tinyint(3) unsigned NOT NULL,
-  `userId` varchar(25) NOT NULL,
-  `activityStartTime` datetime NOT NULL DEFAULT current_timestamp(),
-  `activityEndTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`Id`,`activityTaskId`,`userId`),
-  KEY `fk_activity_task1_idx` (`activityTaskId`),
-  KEY `fk_activity_user1_idx` (`userId`),
-  CONSTRAINT `fk_activity_task1` FOREIGN KEY (`activityTaskId`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_activity_user1` FOREIGN KEY (`userId`) REFERENCES `user1` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `activity`
---
-
-LOCK TABLES `activity` WRITE;
-/*!40000 ALTER TABLE `activity` DISABLE KEYS */;
-/*!40000 ALTER TABLE `activity` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `batch`
 --
 
@@ -56,7 +26,8 @@ CREATE TABLE `batch` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `zip_id` bigint(11) unsigned NOT NULL,
   `trans_type_id` tinyint(3) unsigned NOT NULL,
-  `is_completed` bit(1) DEFAULT b'0',
+  `entry_status` set('Doing','Complete') DEFAULT NULL,
+  `verify_status` set('Doing','Complete') DEFAULT NULL,
   `created_by` varchar(25) DEFAULT 'SYSTEM',
   PRIMARY KEY (`id`,`zip_id`,`trans_type_id`),
   KEY `fk_order_batch1_idx` (`zip_id`),
@@ -72,7 +43,7 @@ CREATE TABLE `batch` (
 
 LOCK TABLES `batch` WRITE;
 /*!40000 ALTER TABLE `batch` DISABLE KEYS */;
-INSERT INTO `batch` VALUES (1,1,2,'\0','3'),(2,1,2,'\0','3'),(3,1,2,'\0','3');
+INSERT INTO `batch` VALUES (1,1,2,'Complete',NULL,'3'),(2,1,2,'Doing',NULL,'3'),(3,1,2,NULL,NULL,'3');
 /*!40000 ALTER TABLE `batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,6 +70,39 @@ LOCK TABLES `currency` WRITE;
 /*!40000 ALTER TABLE `currency` DISABLE KEYS */;
 INSERT INTO `currency` VALUES (1,'036','AUD'),(2,'050','BDT'),(3,'096','BND'),(4,'124','CAD'),(5,'156','CNY'),(6,'978','EUR'),(7,'826','GBP'),(8,'344','HKD'),(9,'360','IDR'),(10,'356','INR'),(11,'392','JPY'),(12,'410','KRW'),(13,'144','LKR'),(14,'446','MOP'),(15,'480','MUR'),(16,'462','MVR'),(17,'458','MYR'),(18,'554','NZD'),(19,'598','PGK'),(20,'608','PHP'),(21,'702','SGD'),(22,'764','THB'),(23,'949','TRY'),(24,'901','TWD'),(25,'840','USD'),(26,'704','VND'),(27,'586','PKR'),(28,'756','CHF'),(29,'784','AED'),(30,'048','BHD'),(31,'512','OMR'),(32,'682','SAR'),(33,'704','VND');
 /*!40000 ALTER TABLE `currency` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_entry`
+--
+
+DROP TABLE IF EXISTS `data_entry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_entry` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(1) unsigned NOT NULL,
+  `batch_id` bigint(11) unsigned NOT NULL,
+  `task_id` tinyint(3) unsigned NOT NULL,
+  `started_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `ended_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`,`user_id`,`batch_id`,`task_id`),
+  KEY `fk_activity_task1_idx` (`task_id`),
+  KEY `fk_activity_user2_idx` (`user_id`),
+  KEY `fk_data_entry_batch1_idx` (`batch_id`),
+  CONSTRAINT `fk_activity_task2` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_activity_user2` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_entry`
+--
+
+LOCK TABLES `data_entry` WRITE;
+/*!40000 ALTER TABLE `data_entry` DISABLE KEYS */;
+INSERT INTO `data_entry` VALUES (1,2,1,4,'2018-04-02 20:45:25',NULL),(2,2,2,4,'2018-04-02 21:09:10',NULL);
+/*!40000 ALTER TABLE `data_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -330,16 +334,16 @@ CREATE TABLE `merchant_header` (
   `currency_id` tinyint(3) unsigned DEFAULT NULL,
   `dcn` char(7) DEFAULT NULL,
   `deposit_date` date DEFAULT NULL,
-  `deposit_amount` varchar(13) DEFAULT NULL,
-  `pull_reason_id` tinyint(3) unsigned DEFAULT NULL,
+  `deposit_amount` decimal(13,2) DEFAULT NULL,
+  `batch_pull_reason_id` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`,`batch_id`),
   KEY `fk_batch_header_currency1_idx` (`currency_id`),
-  KEY `fk_batch_header_pull_reason1_idx` (`pull_reason_id`),
   KEY `fk_merchant_header_batch1_idx` (`batch_id`),
+  KEY `fk_batch_header_pull_reason1_idx` (`batch_pull_reason_id`),
   CONSTRAINT `fk_batch_header_currency1` FOREIGN KEY (`currency_id`) REFERENCES `currency` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_batch_header_pull_reason1` FOREIGN KEY (`pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_merchant_header_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_batch_header_pull_reason1` FOREIGN KEY (`batch_pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_merchant_header_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +352,7 @@ CREATE TABLE `merchant_header` (
 
 LOCK TABLES `merchant_header` WRITE;
 /*!40000 ALTER TABLE `merchant_header` DISABLE KEYS */;
-INSERT INTO `merchant_header` VALUES (1,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000265','2018-03-28','520.00',1),(3,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000004','2018-03-28','4.00',NULL),(4,1,NULL,NULL,NULL,NULL,NULL,NULL,1),(5,1,'0000000000000444','HK COPY PROTOTYPE               ',NULL,'0000000',NULL,NULL,2),(6,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(14,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(16,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(17,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(18,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(21,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(22,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000065','2018-03-28','654.00',NULL),(23,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(24,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(25,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(26,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(27,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000032','2018-03-28','32.00',NULL),(28,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000032','2018-03-28','32.00',NULL),(29,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000005','2018-03-28','5.00',NULL),(30,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000005','2018-03-28','5.00',NULL),(31,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000005','2018-03-28','5.00',NULL),(32,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-02-01','2.00',NULL),(33,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-02-01','2.00',NULL),(34,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-02-01','2.00',NULL),(35,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-02-01','2.00',NULL),(36,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000002','2018-03-28','2.00',NULL),(37,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000002','2018-03-28','2.00',NULL),(38,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000002','2018-03-28','2.00',NULL),(39,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000002','2018-03-28','2.00',NULL),(40,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(41,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(42,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(43,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(44,1,'0000000000000444','HK COPY PROTOTYPE               ',1,'0000002','2018-03-28','2.00',NULL),(45,1,'0000000000000444','HK COPY PROTOTYPE               ',2,'0000005','2018-03-28','6565.00',NULL);
+INSERT INTO `merchant_header` VALUES (1,1,'0000000000000444','HK COPY PROTOTYPE               ',21,'0000999','2018-05-09',520.00,NULL),(2,2,NULL,NULL,NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `merchant_header` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -492,14 +496,11 @@ DROP TABLE IF EXISTS `task`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `description` varchar(45) DEFAULT NULL,
-  `created_by` varchar(25) NOT NULL,
-  PRIMARY KEY (`id`,`created_by`),
-  KEY `fk_task_user_idx` (`created_by`),
-  CONSTRAINT `fk_task_user` FOREIGN KEY (`created_by`) REFERENCES `user1` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -508,7 +509,7 @@ CREATE TABLE `task` (
 
 LOCK TABLES `task` WRITE;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
-INSERT INTO `task` VALUES (6,'Indexing 1',NULL,''),(7,'Indexing 2',NULL,''),(8,'Indexing Compare',NULL,''),(9,'Entry 1',NULL,''),(10,'Verify',NULL,'');
+INSERT INTO `task` VALUES (1,'Indexing 1',NULL),(2,'Indexing 2',NULL),(3,'Indexing Compare',NULL),(4,'Entry 1',NULL),(5,'Verify',NULL);
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -528,26 +529,25 @@ CREATE TABLE `transaction` (
   `card_number` varchar(19) DEFAULT NULL,
   `transaction_date` date DEFAULT NULL,
   `authorization_code` char(6) DEFAULT NULL,
-  `transaction_amount` tinyint(9) DEFAULT NULL,
+  `transaction_amount` decimal(9,2) DEFAULT NULL,
   `installment_months_id` tinyint(2) unsigned DEFAULT NULL,
   `airline_ticket_number` varchar(13) DEFAULT NULL,
   `customer_reference_identifier` varchar(17) DEFAULT NULL,
   `merchant_order_number` varchar(25) DEFAULT NULL,
   `commodity_code` char(4) DEFAULT NULL,
-  `pull_reason_id` tinyint(3) unsigned DEFAULT NULL,
+  `slip_pull_reason_id` tinyint(3) unsigned DEFAULT NULL,
   `exception_id` tinyint(2) unsigned DEFAULT NULL,
   `variance_exception` bit(1) DEFAULT NULL,
   `other_exception_detail` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`,`merchant_header_id`,`transaction_type_id`),
   KEY `fk_transaction_merchant_header1_idx` (`merchant_header_id`),
   KEY `fk_transaction_transaction_type1_idx` (`transaction_type_id`),
-  KEY `fk_transaction_pull_reason1_idx` (`pull_reason_id`),
   KEY `fk_transaction_installment_months1_idx` (`installment_months_id`),
+  KEY `fk_transaction_pull_reason1_idx` (`slip_pull_reason_id`),
   CONSTRAINT `fk_transaction_installment_months1` FOREIGN KEY (`installment_months_id`) REFERENCES `installment_months` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_transaction_merchant_header1` FOREIGN KEY (`merchant_header_id`) REFERENCES `merchant_header` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_transaction_pull_reason1` FOREIGN KEY (`pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_transaction_transaction_type1` FOREIGN KEY (`transaction_type_id`) REFERENCES `transaction_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_transaction_pull_reason1` FOREIGN KEY (`slip_pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -556,7 +556,7 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
-INSERT INTO `transaction` VALUES (1,43,0,1,'F',NULL,'2018-03-28','000002',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(2,44,0,1,'PH',NULL,'2018-03-28','000002',2,NULL,NULL,NULL,NULL,NULL,9,NULL,'',NULL),(3,44,0,4,'PH',NULL,'2018-03-28','000003',3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(4,45,1,1,'PH',NULL,'2018-03-28','000005',5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(5,45,2,4,'D',NULL,'2018-03-28','000002',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL);
+INSERT INTO `transaction` VALUES (9,1,1,6,'BN','4111111111111111','2018-04-02','000abc',65.00,2,NULL,NULL,NULL,NULL,10,16,'\0','test'),(10,1,2,1,'BN','3530111333300000','2018-04-02','000065',656.00,3,NULL,NULL,NULL,NULL,NULL,NULL,'\0',NULL);
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -612,7 +612,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`userID`),
   UNIQUE KEY `userName_UNIQUE` (`userName`),
   KEY `idx_user_common` (`createStatus`,`userTeam`,`userLastPasswordChange`,`userInvalidLoginAttempt`,`userLastLogin`,`userName`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -621,7 +621,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-27 09:46:49',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-27 07:49:00',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$22fSnl/zCT0oJy/1nRmkleEqsI4dJ/fT8YOuFqppHRt/y2xhAbK/.','2018-03-27 05:19:41',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin');
+INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-02 01:58:34',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-03-27 07:49:00',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-03-27 05:19:41',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin'),(12,'user1','user1LastName','user1FirstName','user1MiddleName','$2a$10$uarI6DvyP880qo.aITsvxOR3J73C0AsxgxZZZYWMtviwtqsFsTYp.','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM'),(13,'user2','user2LastName','user2FirstName','user2MiddleName','$2a$10$SvEEmvSpceGHWpxutePppuWgqkWyhQVyUh2bTjJQesyS6vB5B5rlm','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -684,6 +684,35 @@ INSERT INTO `user_role` VALUES (1,1,1,'ACTIVE','SYSTEM'),(2,2,2,'ACTIVE','SYSTEM
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_task`
+--
+
+DROP TABLE IF EXISTS `user_task`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_task` (
+  `id` smallint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(1) unsigned NOT NULL,
+  `task_id` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`,`user_id`,`task_id`),
+  KEY `fk_user_task_user1_idx` (`user_id`),
+  KEY `fk_user_task_task1_idx` (`task_id`),
+  CONSTRAINT `fk_user_task_task1` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_task_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_task`
+--
+
+LOCK TABLES `user_task` WRITE;
+/*!40000 ALTER TABLE `user_task` DISABLE KEYS */;
+INSERT INTO `user_task` VALUES (1,2,4),(2,2,5),(3,3,4),(4,5,5);
+/*!40000 ALTER TABLE `user_task` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `zip`
 --
 
@@ -731,4 +760,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-28 21:49:41
+-- Dump completed on 2018-04-02 22:14:44
