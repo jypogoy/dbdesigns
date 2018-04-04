@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
 --
--- Host: 10.120.20.206    Database: gpap
+-- Host: localhost    Database: gpap
 -- ------------------------------------------------------
--- Server version	5.5.5-10.2.7-MariaDB
+-- Server version	5.7.21-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -43,7 +43,7 @@ CREATE TABLE `batch` (
 
 LOCK TABLES `batch` WRITE;
 /*!40000 ALTER TABLE `batch` DISABLE KEYS */;
-INSERT INTO `batch` VALUES (1,1,2,'Doing',NULL,'3'),(2,1,2,NULL,NULL,'3'),(3,1,2,NULL,NULL,'3'),(4,3,6,NULL,NULL,'3'),(5,1,3,NULL,NULL,'3'),(6,1,3,NULL,NULL,'3'),(7,1,3,NULL,NULL,'3'),(8,5,5,NULL,NULL,'3'),(9,5,5,NULL,NULL,'3'),(10,5,4,NULL,NULL,'3'),(11,5,4,NULL,NULL,'3'),(12,5,1,NULL,NULL,'3'),(13,5,1,NULL,NULL,'3'),(14,2,2,NULL,NULL,'3'),(15,2,2,NULL,NULL,'3'),(16,2,2,NULL,NULL,'3'),(17,4,5,NULL,NULL,'3');
+INSERT INTO `batch` VALUES (1,1,2,'Complete','Doing','3'),(2,1,2,NULL,NULL,'3'),(3,1,2,NULL,NULL,'3'),(4,3,6,NULL,NULL,'3'),(5,1,3,NULL,NULL,'3'),(6,1,3,NULL,NULL,'3'),(7,1,3,NULL,NULL,'3'),(8,5,5,NULL,NULL,'3'),(9,5,5,NULL,NULL,'3'),(10,5,4,NULL,NULL,'3'),(11,5,4,NULL,NULL,'3'),(12,5,1,NULL,NULL,'3'),(13,5,1,NULL,NULL,'3'),(14,2,2,NULL,NULL,'3'),(15,2,2,NULL,NULL,'3'),(16,2,2,NULL,NULL,'3'),(17,4,5,NULL,NULL,'3');
 /*!40000 ALTER TABLE `batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +85,7 @@ CREATE TABLE `data_entry` (
   `user_id` int(1) unsigned NOT NULL,
   `batch_id` bigint(11) unsigned NOT NULL,
   `task_id` tinyint(3) unsigned NOT NULL,
-  `started_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `started_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ended_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`,`user_id`,`batch_id`,`task_id`),
   KEY `fk_activity_task1_idx` (`task_id`),
@@ -93,7 +93,7 @@ CREATE TABLE `data_entry` (
   KEY `fk_data_entry_batch1_idx` (`batch_id`),
   CONSTRAINT `fk_activity_task2` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_activity_user2` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `data_entry` (
 
 LOCK TABLES `data_entry` WRITE;
 /*!40000 ALTER TABLE `data_entry` DISABLE KEYS */;
-INSERT INTO `data_entry` VALUES (1,2,1,4,'2018-04-03 21:56:56',NULL);
+INSERT INTO `data_entry` VALUES (1,2,1,4,'2018-04-04 09:22:18','2018-04-04 09:23:01'),(2,2,1,5,'2018-04-04 09:23:16',NULL);
 /*!40000 ALTER TABLE `data_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +144,7 @@ CREATE TABLE `demographic` (
   `acceptPrivateLabel` char(1) NOT NULL DEFAULT 'N',
   `acceptVisa` char(1) NOT NULL DEFAULT 'N',
   `createdBy` varchar(45) NOT NULL DEFAULT 'SYSTEM',
-  `createdDate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -329,6 +329,7 @@ DROP TABLE IF EXISTS `merchant_header`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `merchant_header` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `data_entry_id` bigint(11) unsigned NOT NULL,
   `batch_id` bigint(11) unsigned NOT NULL,
   `merchant_number` char(16) DEFAULT NULL,
   `merchant_name` varchar(250) DEFAULT NULL,
@@ -338,14 +339,16 @@ CREATE TABLE `merchant_header` (
   `deposit_date` date DEFAULT NULL,
   `deposit_amount` decimal(13,2) DEFAULT NULL,
   `batch_pull_reason_id` tinyint(3) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`,`batch_id`),
+  PRIMARY KEY (`id`,`data_entry_id`,`batch_id`),
   KEY `fk_batch_header_currency1_idx` (`currency_id`),
   KEY `fk_merchant_header_batch1_idx` (`batch_id`),
   KEY `fk_batch_header_pull_reason1_idx` (`batch_pull_reason_id`),
+  KEY `fk_merchant_header_data_entry1_idx` (`data_entry_id`),
   CONSTRAINT `fk_batch_header_currency1` FOREIGN KEY (`currency_id`) REFERENCES `currency` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_batch_header_pull_reason1` FOREIGN KEY (`batch_pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_merchant_header_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_merchant_header_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_merchant_header_data_entry1` FOREIGN KEY (`data_entry_id`) REFERENCES `data_entry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -354,7 +357,7 @@ CREATE TABLE `merchant_header` (
 
 LOCK TABLES `merchant_header` WRITE;
 /*!40000 ALTER TABLE `merchant_header` DISABLE KEYS */;
-INSERT INTO `merchant_header` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
+INSERT INTO `merchant_header` VALUES (1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(2,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `merchant_header` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -604,8 +607,8 @@ CREATE TABLE `user` (
   `userMiddleName` varchar(64) DEFAULT '',
   `userPassword` char(60) NOT NULL,
   `userLastLogin` timestamp NULL DEFAULT NULL,
-  `userInvalidLoginAttempt` int(11) NOT NULL DEFAULT 0,
-  `userLastPasswordChange` timestamp NOT NULL DEFAULT current_timestamp(),
+  `userInvalidLoginAttempt` int(11) NOT NULL DEFAULT '0',
+  `userLastPasswordChange` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `userEmail` varchar(128) DEFAULT NULL,
   `userTeam` varchar(64) DEFAULT NULL,
   `createStatus` enum('ACTIVE','INACTIVE','DELETED') NOT NULL DEFAULT 'ACTIVE',
@@ -637,7 +640,7 @@ CREATE TABLE `user_prev_password` (
   `userprevpasswordID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `userID` int(11) unsigned NOT NULL,
   `userPassword` char(60) NOT NULL,
-  `userprevpasswordChange` timestamp NOT NULL DEFAULT current_timestamp(),
+  `userprevpasswordChange` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userprevpasswordID`),
   KEY `fk_user_prev_password_userID_idx` (`userID`),
   CONSTRAINT `fk_user_prev_password_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -709,7 +712,7 @@ CREATE TABLE `user_task` (
 
 LOCK TABLES `user_task` WRITE;
 /*!40000 ALTER TABLE `user_task` DISABLE KEYS */;
-INSERT INTO `user_task` VALUES (1,2,4),(2,2,5),(3,3,4),(4,5,5);
+INSERT INTO `user_task` VALUES (1,2,4),(3,3,4),(2,2,5),(4,5,5);
 /*!40000 ALTER TABLE `user_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -743,14 +746,6 @@ LOCK TABLES `zip` WRITE;
 INSERT INTO `zip` VALUES (1,'BN','2010-01-01',1,1,'1'),(2,'BN','2010-01-01',3,1,'1'),(3,'HK','2018-01-01',2,3,'1'),(4,'PH','2010-01-01',1,1,'1'),(5,'BN','2010-01-01',2,1,'1');
 /*!40000 ALTER TABLE `zip` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'gpap'
---
-
---
--- Dumping routines for database 'gpap'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -761,4 +756,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-03 22:12:59
+-- Dump completed on 2018-04-04 10:28:10
