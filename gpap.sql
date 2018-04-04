@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
 --
--- Host: localhost    Database: gpap
+-- Host: 10.120.20.206    Database: gpap
 -- ------------------------------------------------------
--- Server version	5.7.21-0ubuntu0.16.04.1
+-- Server version	5.5.5-10.2.7-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -34,7 +34,7 @@ CREATE TABLE `batch` (
   KEY `fk_order_trans_type1_idx` (`trans_type_id`),
   CONSTRAINT `fk_order_batch1` FOREIGN KEY (`zip_id`) REFERENCES `zip` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_trans_type1` FOREIGN KEY (`trans_type_id`) REFERENCES `transaction_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `batch` (
 
 LOCK TABLES `batch` WRITE;
 /*!40000 ALTER TABLE `batch` DISABLE KEYS */;
-INSERT INTO `batch` VALUES (1,1,2,'Complete','Doing','3'),(2,1,2,NULL,NULL,'3'),(3,1,2,NULL,NULL,'3'),(4,3,6,NULL,NULL,'3'),(5,1,3,NULL,NULL,'3'),(6,1,3,NULL,NULL,'3'),(7,1,3,NULL,NULL,'3'),(8,5,5,NULL,NULL,'3'),(9,5,5,NULL,NULL,'3'),(10,5,4,NULL,NULL,'3'),(11,5,4,NULL,NULL,'3'),(12,5,1,NULL,NULL,'3'),(13,5,1,NULL,NULL,'3'),(14,2,2,NULL,NULL,'3'),(15,2,2,NULL,NULL,'3'),(16,2,2,NULL,NULL,'3'),(17,4,5,NULL,NULL,'3');
+INSERT INTO `batch` VALUES (1,1,2,'Doing',NULL,'3'),(2,1,2,NULL,NULL,'3'),(3,1,2,NULL,NULL,'3'),(4,3,6,NULL,NULL,'3'),(5,1,3,NULL,NULL,'3'),(6,1,3,NULL,NULL,'3'),(7,1,3,NULL,NULL,'3'),(8,5,5,NULL,NULL,'3'),(9,5,5,NULL,NULL,'3'),(10,5,4,NULL,NULL,'3'),(11,5,4,NULL,NULL,'3'),(12,5,1,NULL,NULL,'3'),(13,5,1,NULL,NULL,'3'),(14,2,2,NULL,NULL,'3'),(15,2,2,NULL,NULL,'3'),(16,2,2,NULL,NULL,'3'),(17,4,5,NULL,NULL,'3'),(18,5,3,'Doing',NULL,'3');
 /*!40000 ALTER TABLE `batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +85,7 @@ CREATE TABLE `data_entry` (
   `user_id` int(1) unsigned NOT NULL,
   `batch_id` bigint(11) unsigned NOT NULL,
   `task_id` tinyint(3) unsigned NOT NULL,
-  `started_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `started_at` datetime NOT NULL DEFAULT current_timestamp(),
   `ended_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`,`user_id`,`batch_id`,`task_id`),
   KEY `fk_activity_task1_idx` (`task_id`),
@@ -93,7 +93,7 @@ CREATE TABLE `data_entry` (
   KEY `fk_data_entry_batch1_idx` (`batch_id`),
   CONSTRAINT `fk_activity_task2` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_activity_user2` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `data_entry` (
 
 LOCK TABLES `data_entry` WRITE;
 /*!40000 ALTER TABLE `data_entry` DISABLE KEYS */;
-INSERT INTO `data_entry` VALUES (1,2,1,4,'2018-04-04 09:22:18','2018-04-04 09:23:01'),(2,2,1,5,'2018-04-04 09:23:16',NULL);
+INSERT INTO `data_entry` VALUES (1,2,1,4,'2018-04-04 22:05:04',NULL);
 /*!40000 ALTER TABLE `data_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +144,7 @@ CREATE TABLE `demographic` (
   `acceptPrivateLabel` char(1) NOT NULL DEFAULT 'N',
   `acceptVisa` char(1) NOT NULL DEFAULT 'N',
   `createdBy` varchar(45) NOT NULL DEFAULT 'SYSTEM',
-  `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdDate` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -214,7 +214,7 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
-INSERT INTO `image` VALUES (1,'/BN/20100101-1-001/Airline/scan0001-5.tif',NULL,1,2,1,'','','3'),(2,'/BN/20100101-1-001/Airline/scan0002.tif',NULL,1,2,1,'\0','','3'),(3,'/BN/20100101-1-001/Airline/scan0003.tif',NULL,1,2,2,'','','3'),(4,'/BN/20100101-1-001/Airline/scan0004-10.tif',NULL,1,2,2,'\0','','3'),(5,'/BN/20100101-1-001/Airline/scan0010-10.tif',NULL,1,2,3,'','','3'),(6,'/BN/20100101-1-001/Airline/scan0011.tif',NULL,1,2,3,'\0','','3'),(26,'/BN/20100101-1-001/Credit/scan0001-5.tif',NULL,1,3,5,'','','3'),(27,'/BN/20100101-1-001/Credit/scan0002.tif',NULL,1,3,5,'\0','','3'),(28,'/BN/20100101-1-001/Credit/scan0003.tif',NULL,1,3,6,'','','3'),(29,'/BN/20100101-1-001/Credit/scan0004-10.tif',NULL,1,3,6,'\0','','3'),(30,'/BN/20100101-1-001/Credit/scan0010-10.tif',NULL,1,3,6,'\0','','3'),(31,'/BN/20100101-1-001/Credit/scan0011.tif',NULL,1,3,7,'','','3'),(33,'/BN/20100101-3-001/Airline/scan0001-5.tif',NULL,2,2,14,'','','3'),(34,'/BN/20100101-3-001/Airline/scan0002.tif',NULL,2,2,14,'\0','','3'),(35,'/BN/20100101-3-001/Airline/scan0003.tif',NULL,2,2,15,'','','3'),(36,'/BN/20100101-3-001/Airline/scan0004-10.tif',NULL,2,2,15,'\0','','3'),(37,'/BN/20100101-3-001/Airline/scan0010-10.tif',NULL,2,2,15,'\0','','3'),(38,'/BN/20100101-3-001/Airline/scan0011.tif',NULL,2,2,16,'','','3'),(40,'/BN/20100101-3-001/Credit/scan0001-5.tif',NULL,2,3,NULL,'\0','\0','2'),(41,'/BN/20100101-3-001/Credit/scan0002.tif',NULL,2,3,NULL,'\0','\0','2'),(42,'/BN/20100101-3-001/Credit/scan0003.tif',NULL,2,3,NULL,'\0','\0','2'),(43,'/BN/20100101-3-001/Credit/scan0004-10.tif',NULL,2,3,NULL,'\0','\0','2'),(44,'/BN/20100101-3-001/Credit/scan0010-10.tif',NULL,2,3,NULL,'\0','\0','2'),(45,'/BN/20100101-3-001/Credit/scan0011.tif',NULL,2,3,NULL,'\0','\0','2'),(47,'/HK/20180101-2-003/Normal Purchase/Scan0001.tif',NULL,3,1,NULL,'\0','\0','1'),(48,'/BN/20100101-2-001/Airline/scan0001-5.tif',NULL,5,2,NULL,'\0','\0','1'),(49,'/BN/20100101-2-001/Airline/scan0002.tif',NULL,5,2,NULL,'\0','\0','1'),(50,'/BN/20100101-2-001/Airline/scan0003.tif',NULL,5,2,NULL,'\0','\0','1'),(51,'/BN/20100101-2-001/Airline/scan0004-10.tif',NULL,5,2,NULL,'\0','\0','1'),(52,'/BN/20100101-2-001/Airline/scan0010-10.tif',NULL,5,2,NULL,'\0','\0','1'),(53,'/BN/20100101-2-001/Airline/scan0011.tif',NULL,5,2,NULL,'\0','\0','1'),(55,'/BN/20100101-2-001/Credit/scan0001-5.tif',NULL,5,3,NULL,'\0','\0','1'),(56,'/BN/20100101-2-001/Credit/scan0002.tif',NULL,5,3,NULL,'\0','\0','1'),(57,'/BN/20100101-2-001/Credit/scan0003.tif',NULL,5,3,NULL,'\0','\0','1'),(58,'/BN/20100101-2-001/Credit/scan0004-10.tif',NULL,5,3,NULL,'\0','\0','1'),(59,'/BN/20100101-2-001/Credit/scan0010-10.tif',NULL,5,3,NULL,'\0','\0','1'),(60,'/BN/20100101-2-001/Credit/scan0011.tif',NULL,5,3,NULL,'\0','\0','1'),(61,'/HK/20180101-2-003/VI/Scan0001.tif',NULL,3,6,4,'','','3'),(62,'/BN/20100101-2-001/Airline Credit/scan0001-5.tif',NULL,5,5,8,'','','3'),(63,'/BN/20100101-2-001/Airline Credit/scan0002.tif',NULL,5,5,8,'\0','','3'),(64,'/BN/20100101-2-001/Airline Credit/scan0003.tif',NULL,5,5,9,'','','3'),(65,'/BN/20100101-2-001/Airline Credit/scan0004-10.tif',NULL,5,5,9,'\0','','3'),(66,'/BN/20100101-2-001/Airline Credit/scan0010-10.tif',NULL,5,5,9,'\0','','3'),(67,'/BN/20100101-2-001/Airline Credit/scan0011.tif',NULL,5,5,9,'\0','','3'),(69,'/BN/20100101-2-001/Cash Advance/scan0001-5.tif',NULL,5,4,10,'','','3'),(70,'/BN/20100101-2-001/Cash Advance/scan0002.tif',NULL,5,4,10,'\0','','3'),(71,'/BN/20100101-2-001/Cash Advance/scan0003.tif',NULL,5,4,11,'','','3'),(72,'/BN/20100101-2-001/Cash Advance/scan0004-10.tif',NULL,5,4,11,'\0','','3'),(73,'/BN/20100101-2-001/Cash Advance/scan0010-10.tif',NULL,5,4,11,'\0','','3'),(74,'/BN/20100101-2-001/Cash Advance/scan0011.tif',NULL,5,4,11,'\0','','3'),(76,'/BN/20100101-2-001/Normal Purchase/scan0001-5.tif',NULL,5,1,12,'','','3'),(77,'/BN/20100101-2-001/Normal Purchase/scan0002.tif',NULL,5,1,12,'\0','','3'),(78,'/BN/20100101-2-001/Normal Purchase/scan0003.tif',NULL,5,1,13,'','','3'),(79,'/BN/20100101-2-001/Normal Purchase/scan0004-10.tif',NULL,5,1,13,'\0','','3'),(80,'/BN/20100101-2-001/Normal Purchase/scan0010-10.tif',NULL,5,1,13,'\0','','3'),(81,'/BN/20100101-2-001/Normal Purchase/scan0011.tif',NULL,5,1,13,'\0','','3'),(83,'/PH/20100101-1-001/Airline Credit/Scan0001.tif',NULL,4,5,17,'','','3'),(84,'/PH/20100101-1-001/Airline Credit/Scan0003.tif',NULL,4,5,17,'\0','','3');
+INSERT INTO `image` VALUES (1,'/BN/20100101-1-001/Airline/scan0001-5.tif',NULL,1,2,1,'','','3'),(2,'/BN/20100101-1-001/Airline/scan0002.tif',NULL,1,2,1,'\0','','3'),(3,'/BN/20100101-1-001/Airline/scan0003.tif',NULL,1,2,2,'','','3'),(4,'/BN/20100101-1-001/Airline/scan0004-10.tif',NULL,1,2,2,'\0','','3'),(5,'/BN/20100101-1-001/Airline/scan0010-10.tif',NULL,1,2,3,'','','3'),(6,'/BN/20100101-1-001/Airline/scan0011.tif',NULL,1,2,3,'\0','','3'),(26,'/BN/20100101-1-001/Credit/scan0001-5.tif',NULL,1,3,5,'','','3'),(27,'/BN/20100101-1-001/Credit/scan0002.tif',NULL,1,3,5,'\0','','3'),(28,'/BN/20100101-1-001/Credit/scan0003.tif',NULL,1,3,6,'','','3'),(29,'/BN/20100101-1-001/Credit/scan0004-10.tif',NULL,1,3,6,'\0','','3'),(30,'/BN/20100101-1-001/Credit/scan0010-10.tif',NULL,1,3,6,'\0','','3'),(31,'/BN/20100101-1-001/Credit/scan0011.tif',NULL,1,3,7,'','','3'),(33,'/BN/20100101-3-001/Airline/scan0001-5.tif',NULL,2,2,14,'','','3'),(34,'/BN/20100101-3-001/Airline/scan0002.tif',NULL,2,2,14,'\0','','3'),(35,'/BN/20100101-3-001/Airline/scan0003.tif',NULL,2,2,15,'','','3'),(36,'/BN/20100101-3-001/Airline/scan0004-10.tif',NULL,2,2,15,'\0','','3'),(37,'/BN/20100101-3-001/Airline/scan0010-10.tif',NULL,2,2,15,'\0','','3'),(38,'/BN/20100101-3-001/Airline/scan0011.tif',NULL,2,2,16,'','','3'),(40,'/BN/20100101-3-001/Credit/scan0001-5.tif',NULL,2,3,NULL,'\0','\0','2'),(41,'/BN/20100101-3-001/Credit/scan0002.tif',NULL,2,3,NULL,'\0','\0','2'),(42,'/BN/20100101-3-001/Credit/scan0003.tif',NULL,2,3,NULL,'\0','\0','2'),(43,'/BN/20100101-3-001/Credit/scan0004-10.tif',NULL,2,3,NULL,'\0','\0','2'),(44,'/BN/20100101-3-001/Credit/scan0010-10.tif',NULL,2,3,NULL,'\0','\0','2'),(45,'/BN/20100101-3-001/Credit/scan0011.tif',NULL,2,3,NULL,'\0','\0','2'),(47,'/HK/20180101-2-003/Normal Purchase/Scan0001.tif',NULL,3,1,NULL,'\0','\0','1'),(48,'/BN/20100101-2-001/Airline/scan0001-5.tif',NULL,5,2,NULL,'\0','\0','1'),(49,'/BN/20100101-2-001/Airline/scan0002.tif',NULL,5,2,NULL,'\0','\0','1'),(50,'/BN/20100101-2-001/Airline/scan0003.tif',NULL,5,2,NULL,'\0','\0','1'),(51,'/BN/20100101-2-001/Airline/scan0004-10.tif',NULL,5,2,NULL,'\0','\0','1'),(52,'/BN/20100101-2-001/Airline/scan0010-10.tif',NULL,5,2,NULL,'\0','\0','1'),(53,'/BN/20100101-2-001/Airline/scan0011.tif',NULL,5,2,NULL,'\0','\0','1'),(55,'/BN/20100101-2-001/Credit/scan0001-5.tif',NULL,5,3,18,'','\0','3'),(56,'/BN/20100101-2-001/Credit/scan0002.tif',NULL,5,3,18,'\0','\0','3'),(57,'/BN/20100101-2-001/Credit/scan0003.tif',NULL,5,3,18,'\0','\0','3'),(58,'/BN/20100101-2-001/Credit/scan0004-10.tif',NULL,5,3,18,'\0','\0','3'),(59,'/BN/20100101-2-001/Credit/scan0010-10.tif',NULL,5,3,18,'\0','\0','3'),(60,'/BN/20100101-2-001/Credit/scan0011.tif',NULL,5,3,18,'\0','\0','3'),(61,'/HK/20180101-2-003/VI/Scan0001.tif',NULL,3,6,4,'','','3'),(62,'/BN/20100101-2-001/Airline Credit/scan0001-5.tif',NULL,5,5,8,'','','3'),(63,'/BN/20100101-2-001/Airline Credit/scan0002.tif',NULL,5,5,8,'\0','','3'),(64,'/BN/20100101-2-001/Airline Credit/scan0003.tif',NULL,5,5,9,'','','3'),(65,'/BN/20100101-2-001/Airline Credit/scan0004-10.tif',NULL,5,5,9,'\0','','3'),(66,'/BN/20100101-2-001/Airline Credit/scan0010-10.tif',NULL,5,5,9,'\0','','3'),(67,'/BN/20100101-2-001/Airline Credit/scan0011.tif',NULL,5,5,9,'\0','','3'),(69,'/BN/20100101-2-001/Cash Advance/scan0001-5.tif',NULL,5,4,10,'','','3'),(70,'/BN/20100101-2-001/Cash Advance/scan0002.tif',NULL,5,4,10,'\0','','3'),(71,'/BN/20100101-2-001/Cash Advance/scan0003.tif',NULL,5,4,11,'','','3'),(72,'/BN/20100101-2-001/Cash Advance/scan0004-10.tif',NULL,5,4,11,'\0','','3'),(73,'/BN/20100101-2-001/Cash Advance/scan0010-10.tif',NULL,5,4,11,'\0','','3'),(74,'/BN/20100101-2-001/Cash Advance/scan0011.tif',NULL,5,4,11,'\0','','3'),(76,'/BN/20100101-2-001/Normal Purchase/scan0001-5.tif',NULL,5,1,12,'','','3'),(77,'/BN/20100101-2-001/Normal Purchase/scan0002.tif',NULL,5,1,12,'\0','','3'),(78,'/BN/20100101-2-001/Normal Purchase/scan0003.tif',NULL,5,1,13,'','','3'),(79,'/BN/20100101-2-001/Normal Purchase/scan0004-10.tif',NULL,5,1,13,'\0','','3'),(80,'/BN/20100101-2-001/Normal Purchase/scan0010-10.tif',NULL,5,1,13,'\0','','3'),(81,'/BN/20100101-2-001/Normal Purchase/scan0011.tif',NULL,5,1,13,'\0','','3'),(83,'/PH/20100101-1-001/Airline Credit/Scan0001.tif',NULL,4,5,17,'','','3'),(84,'/PH/20100101-1-001/Airline Credit/Scan0003.tif',NULL,4,5,17,'\0','','3');
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +232,7 @@ CREATE TABLE `index` (
   `is_completed` bit(1) DEFAULT b'0',
   `created_by` varchar(25) DEFAULT 'SYSTEM',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +241,7 @@ CREATE TABLE `index` (
 
 LOCK TABLES `index` WRITE;
 /*!40000 ALTER TABLE `index` DISABLE KEYS */;
-INSERT INTO `index` VALUES (1,1,'','','1'),(2,2,'\0','','1'),(3,3,'','','1'),(4,4,'\0','','1'),(5,5,'','','1'),(6,6,'\0','','1'),(8,1,'','','2'),(9,2,'\0','','2'),(10,3,'','','2'),(11,4,'\0','','2'),(12,5,'','','2'),(13,6,'\0','','2'),(15,26,'','','1'),(16,27,'\0','','1'),(17,28,'\0','','1'),(18,29,'','','1'),(19,30,'\0','','1'),(20,31,'\0','','1'),(22,33,'','','1'),(23,34,'\0','','1'),(24,35,'\0','','1'),(25,36,'','','1'),(26,37,'\0','','1'),(27,38,'\0','','1'),(29,40,'','','2'),(30,41,'\0','','2'),(31,42,'','','2'),(32,43,'\0','','2'),(33,44,'\0','','2'),(34,45,'','','2'),(36,33,'','','2'),(37,34,'\0','','2'),(38,35,'','','2'),(39,36,'\0','','2'),(40,37,'\0','','2'),(41,38,'','','2'),(43,26,'','','2'),(44,27,'\0','','2'),(45,28,'','','2'),(46,29,'\0','','2'),(47,30,'\0','','2'),(48,31,'','','2'),(50,47,'','\0','1'),(51,48,'','\0','1'),(52,49,'\0','\0','1'),(53,50,'\0','\0','1'),(54,51,'\0','\0','1'),(55,52,'','\0','1'),(56,53,'\0','\0','1'),(58,48,'\0','','2'),(59,49,'','','2'),(60,50,'\0','','2'),(61,51,'','','2'),(62,52,'\0','','2'),(63,53,'','','2'),(65,55,'','\0','1'),(66,56,'\0','\0','1'),(67,57,'\0','\0','1'),(68,58,'\0','\0','1'),(69,59,'\0','\0','1'),(70,60,'\0','\0','1'),(71,61,'','','1'),(72,61,'','','2'),(73,62,'','','1'),(74,63,'\0','','1'),(75,64,'','','1'),(76,65,'\0','','1'),(77,66,'\0','','1'),(78,67,'\0','','1'),(80,69,'','','1'),(81,70,'\0','','1'),(82,71,'','','1'),(83,72,'\0','','1'),(84,73,'\0','','1'),(85,74,'\0','','1'),(87,76,'','','1'),(88,77,'\0','','1'),(89,78,'','','1'),(90,79,'\0','','1'),(91,80,'\0','','1'),(92,81,'\0','','1'),(94,83,'','','1'),(95,84,'\0','','1'),(97,62,'','','2'),(98,63,'\0','','2'),(99,64,'','','2'),(100,65,'\0','','2'),(101,66,'\0','','2'),(102,67,'\0','','2'),(104,69,'','','2'),(105,70,'\0','','2'),(106,71,'','','2'),(107,72,'\0','','2'),(108,73,'\0','','2'),(109,74,'\0','','2'),(111,76,'','','2'),(112,77,'\0','','2'),(113,78,'','','2'),(114,79,'\0','','2'),(115,80,'\0','','2'),(116,81,'\0','','2'),(118,47,'','','2'),(119,83,'','','2'),(120,84,'\0','','2');
+INSERT INTO `index` VALUES (1,1,'','','1'),(2,2,'\0','','1'),(3,3,'','','1'),(4,4,'\0','','1'),(5,5,'','','1'),(6,6,'\0','','1'),(8,1,'','','2'),(9,2,'\0','','2'),(10,3,'','','2'),(11,4,'\0','','2'),(12,5,'','','2'),(13,6,'\0','','2'),(15,26,'','','1'),(16,27,'\0','','1'),(17,28,'\0','','1'),(18,29,'','','1'),(19,30,'\0','','1'),(20,31,'\0','','1'),(22,33,'','','1'),(23,34,'\0','','1'),(24,35,'\0','','1'),(25,36,'','','1'),(26,37,'\0','','1'),(27,38,'\0','','1'),(29,40,'','','2'),(30,41,'\0','','2'),(31,42,'','','2'),(32,43,'\0','','2'),(33,44,'\0','','2'),(34,45,'','','2'),(36,33,'','','2'),(37,34,'\0','','2'),(38,35,'','','2'),(39,36,'\0','','2'),(40,37,'\0','','2'),(41,38,'','','2'),(43,26,'','','2'),(44,27,'\0','','2'),(45,28,'','','2'),(46,29,'\0','','2'),(47,30,'\0','','2'),(48,31,'','','2'),(50,47,'','\0','1'),(51,48,'','\0','1'),(52,49,'\0','\0','1'),(53,50,'\0','\0','1'),(54,51,'\0','\0','1'),(55,52,'','\0','1'),(56,53,'\0','\0','1'),(58,48,'\0','','2'),(59,49,'','','2'),(60,50,'\0','','2'),(61,51,'','','2'),(62,52,'\0','','2'),(63,53,'','','2'),(65,55,'','','1'),(66,56,'\0','','1'),(67,57,'\0','','1'),(68,58,'\0','','1'),(69,59,'\0','','1'),(70,60,'\0','','1'),(71,61,'','','1'),(72,61,'','','2'),(73,62,'','','1'),(74,63,'\0','','1'),(75,64,'','','1'),(76,65,'\0','','1'),(77,66,'\0','','1'),(78,67,'\0','','1'),(80,69,'','','1'),(81,70,'\0','','1'),(82,71,'','','1'),(83,72,'\0','','1'),(84,73,'\0','','1'),(85,74,'\0','','1'),(87,76,'','','1'),(88,77,'\0','','1'),(89,78,'','','1'),(90,79,'\0','','1'),(91,80,'\0','','1'),(92,81,'\0','','1'),(94,83,'','','1'),(95,84,'\0','','1'),(97,62,'','','2'),(98,63,'\0','','2'),(99,64,'','','2'),(100,65,'\0','','2'),(101,66,'\0','','2'),(102,67,'\0','','2'),(104,69,'','','2'),(105,70,'\0','','2'),(106,71,'','','2'),(107,72,'\0','','2'),(108,73,'\0','','2'),(109,74,'\0','','2'),(111,76,'','','2'),(112,77,'\0','','2'),(113,78,'','','2'),(114,79,'\0','','2'),(115,80,'\0','','2'),(116,81,'\0','','2'),(118,47,'','','2'),(119,83,'','','2'),(120,84,'\0','','2'),(122,55,'','','2'),(123,56,'\0','','2'),(124,57,'\0','','2'),(125,58,'\0','','2'),(126,59,'\0','','2'),(127,60,'\0','','2');
 /*!40000 ALTER TABLE `index` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +348,7 @@ CREATE TABLE `merchant_header` (
   CONSTRAINT `fk_batch_header_pull_reason1` FOREIGN KEY (`batch_pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_merchant_header_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_merchant_header_data_entry1` FOREIGN KEY (`data_entry_id`) REFERENCES `data_entry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,7 +357,6 @@ CREATE TABLE `merchant_header` (
 
 LOCK TABLES `merchant_header` WRITE;
 /*!40000 ALTER TABLE `merchant_header` DISABLE KEYS */;
-INSERT INTO `merchant_header` VALUES (1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(2,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `merchant_header` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -607,8 +606,8 @@ CREATE TABLE `user` (
   `userMiddleName` varchar(64) DEFAULT '',
   `userPassword` char(60) NOT NULL,
   `userLastLogin` timestamp NULL DEFAULT NULL,
-  `userInvalidLoginAttempt` int(11) NOT NULL DEFAULT '0',
-  `userLastPasswordChange` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `userInvalidLoginAttempt` int(11) NOT NULL DEFAULT 0,
+  `userLastPasswordChange` timestamp NOT NULL DEFAULT current_timestamp(),
   `userEmail` varchar(128) DEFAULT NULL,
   `userTeam` varchar(64) DEFAULT NULL,
   `createStatus` enum('ACTIVE','INACTIVE','DELETED') NOT NULL DEFAULT 'ACTIVE',
@@ -625,7 +624,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-03 11:48:21',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-03 11:49:00',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-03 11:49:33',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin'),(12,'user1','user1LastName','user1FirstName','user1MiddleName','$2a$10$uarI6DvyP880qo.aITsvxOR3J73C0AsxgxZZZYWMtviwtqsFsTYp.','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM'),(13,'user2','user2LastName','user2FirstName','user2MiddleName','$2a$10$SvEEmvSpceGHWpxutePppuWgqkWyhQVyUh2bTjJQesyS6vB5B5rlm','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM');
+INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-04 05:45:54',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-04 04:30:35',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-04 05:45:46',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin'),(12,'user1','user1LastName','user1FirstName','user1MiddleName','$2a$10$uarI6DvyP880qo.aITsvxOR3J73C0AsxgxZZZYWMtviwtqsFsTYp.','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM'),(13,'user2','user2LastName','user2FirstName','user2MiddleName','$2a$10$SvEEmvSpceGHWpxutePppuWgqkWyhQVyUh2bTjJQesyS6vB5B5rlm','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -640,7 +639,7 @@ CREATE TABLE `user_prev_password` (
   `userprevpasswordID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `userID` int(11) unsigned NOT NULL,
   `userPassword` char(60) NOT NULL,
-  `userprevpasswordChange` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `userprevpasswordChange` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`userprevpasswordID`),
   KEY `fk_user_prev_password_userID_idx` (`userID`),
   CONSTRAINT `fk_user_prev_password_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -712,7 +711,7 @@ CREATE TABLE `user_task` (
 
 LOCK TABLES `user_task` WRITE;
 /*!40000 ALTER TABLE `user_task` DISABLE KEYS */;
-INSERT INTO `user_task` VALUES (1,2,4),(3,3,4),(2,2,5),(4,5,5);
+INSERT INTO `user_task` VALUES (1,2,4),(2,2,5),(3,3,4),(4,5,5);
 /*!40000 ALTER TABLE `user_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -746,6 +745,14 @@ LOCK TABLES `zip` WRITE;
 INSERT INTO `zip` VALUES (1,'BN','2010-01-01',1,1,'1'),(2,'BN','2010-01-01',3,1,'1'),(3,'HK','2018-01-01',2,3,'1'),(4,'PH','2010-01-01',1,1,'1'),(5,'BN','2010-01-01',2,1,'1');
 /*!40000 ALTER TABLE `zip` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'gpap'
+--
+
+--
+-- Dumping routines for database 'gpap'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -756,4 +763,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-04 10:28:10
+-- Dump completed on 2018-04-04 22:18:58
