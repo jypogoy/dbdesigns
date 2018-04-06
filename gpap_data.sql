@@ -28,6 +28,7 @@ CREATE TABLE `batch` (
   `trans_type_id` tinyint(3) unsigned NOT NULL,
   `entry_status` set('Doing','Complete') DEFAULT NULL,
   `verify_status` set('Doing','Complete') DEFAULT NULL,
+  `is_exception` bit(1) DEFAULT NULL,
   `created_by` varchar(25) DEFAULT 'SYSTEM',
   PRIMARY KEY (`id`,`zip_id`,`trans_type_id`),
   KEY `fk_order_batch1_idx` (`zip_id`),
@@ -43,7 +44,7 @@ CREATE TABLE `batch` (
 
 LOCK TABLES `batch` WRITE;
 /*!40000 ALTER TABLE `batch` DISABLE KEYS */;
-INSERT INTO `batch` VALUES (1,1,2,'Doing',NULL,'3'),(2,1,2,NULL,NULL,'3'),(3,1,2,NULL,NULL,'3'),(4,3,6,NULL,NULL,'3'),(5,1,3,NULL,NULL,'3'),(6,1,3,NULL,NULL,'3'),(7,1,3,NULL,NULL,'3'),(8,5,5,NULL,NULL,'3'),(9,5,5,NULL,NULL,'3'),(10,5,4,NULL,NULL,'3'),(11,5,4,NULL,NULL,'3'),(12,5,1,NULL,NULL,'3'),(13,5,1,NULL,NULL,'3'),(14,2,2,NULL,NULL,'3'),(15,2,2,NULL,NULL,'3'),(16,2,2,NULL,NULL,'3'),(17,4,5,NULL,NULL,'3'),(18,5,3,'Doing',NULL,'3');
+INSERT INTO `batch` VALUES (1,1,2,'Complete','Doing','\0','3'),(2,1,2,NULL,NULL,NULL,'3'),(3,1,2,NULL,NULL,NULL,'3'),(4,3,6,NULL,NULL,NULL,'3'),(5,1,3,NULL,NULL,NULL,'3'),(6,1,3,NULL,NULL,NULL,'3'),(7,1,3,NULL,NULL,NULL,'3'),(8,5,5,NULL,NULL,NULL,'3'),(9,5,5,NULL,NULL,NULL,'3'),(10,5,4,NULL,NULL,NULL,'3'),(11,5,4,NULL,NULL,NULL,'3'),(12,5,1,NULL,NULL,NULL,'3'),(13,5,1,NULL,NULL,NULL,'3'),(14,2,2,NULL,NULL,NULL,'3'),(15,2,2,NULL,NULL,NULL,'3'),(16,2,2,NULL,NULL,NULL,'3'),(17,4,5,NULL,NULL,NULL,'3'),(18,5,3,NULL,NULL,NULL,'3');
 /*!40000 ALTER TABLE `batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +94,7 @@ CREATE TABLE `data_entry` (
   KEY `fk_data_entry_batch1_idx` (`batch_id`),
   CONSTRAINT `fk_activity_task2` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_activity_user2` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +103,7 @@ CREATE TABLE `data_entry` (
 
 LOCK TABLES `data_entry` WRITE;
 /*!40000 ALTER TABLE `data_entry` DISABLE KEYS */;
-INSERT INTO `data_entry` VALUES (1,2,1,4,'2018-04-04 22:05:04',NULL);
+INSERT INTO `data_entry` VALUES (1,2,1,4,'2018-04-06 20:35:42','2018-04-06 21:04:40'),(2,2,1,5,'2018-04-06 21:04:48',NULL);
 /*!40000 ALTER TABLE `data_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +199,7 @@ CREATE TABLE `image` (
   `trans_type_id` tinyint(3) unsigned NOT NULL,
   `batch_id` bigint(11) unsigned DEFAULT NULL,
   `is_start` bit(1) DEFAULT b'0',
-  `is_completed` bit(1) DEFAULT b'0',
+  `is_completed` bit(1) DEFAULT NULL,
   `created_by` varchar(25) DEFAULT 'SYSTEM',
   PRIMARY KEY (`id`),
   KEY `fk_image_batch1_idx` (`zip_id`),
@@ -214,7 +215,7 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
-INSERT INTO `image` VALUES (1,'/BN/20100101-1-001/Airline/scan0001-5.tif',NULL,1,2,1,'','','3'),(2,'/BN/20100101-1-001/Airline/scan0002.tif',NULL,1,2,1,'\0','','3'),(3,'/BN/20100101-1-001/Airline/scan0003.tif',NULL,1,2,2,'','','3'),(4,'/BN/20100101-1-001/Airline/scan0004-10.tif',NULL,1,2,2,'\0','','3'),(5,'/BN/20100101-1-001/Airline/scan0010-10.tif',NULL,1,2,3,'','','3'),(6,'/BN/20100101-1-001/Airline/scan0011.tif',NULL,1,2,3,'\0','','3'),(26,'/BN/20100101-1-001/Credit/scan0001-5.tif',NULL,1,3,5,'','','3'),(27,'/BN/20100101-1-001/Credit/scan0002.tif',NULL,1,3,5,'\0','','3'),(28,'/BN/20100101-1-001/Credit/scan0003.tif',NULL,1,3,6,'','','3'),(29,'/BN/20100101-1-001/Credit/scan0004-10.tif',NULL,1,3,6,'\0','','3'),(30,'/BN/20100101-1-001/Credit/scan0010-10.tif',NULL,1,3,6,'\0','','3'),(31,'/BN/20100101-1-001/Credit/scan0011.tif',NULL,1,3,7,'','','3'),(33,'/BN/20100101-3-001/Airline/scan0001-5.tif',NULL,2,2,14,'','','3'),(34,'/BN/20100101-3-001/Airline/scan0002.tif',NULL,2,2,14,'\0','','3'),(35,'/BN/20100101-3-001/Airline/scan0003.tif',NULL,2,2,15,'','','3'),(36,'/BN/20100101-3-001/Airline/scan0004-10.tif',NULL,2,2,15,'\0','','3'),(37,'/BN/20100101-3-001/Airline/scan0010-10.tif',NULL,2,2,15,'\0','','3'),(38,'/BN/20100101-3-001/Airline/scan0011.tif',NULL,2,2,16,'','','3'),(40,'/BN/20100101-3-001/Credit/scan0001-5.tif',NULL,2,3,NULL,'\0','\0','2'),(41,'/BN/20100101-3-001/Credit/scan0002.tif',NULL,2,3,NULL,'\0','\0','2'),(42,'/BN/20100101-3-001/Credit/scan0003.tif',NULL,2,3,NULL,'\0','\0','2'),(43,'/BN/20100101-3-001/Credit/scan0004-10.tif',NULL,2,3,NULL,'\0','\0','2'),(44,'/BN/20100101-3-001/Credit/scan0010-10.tif',NULL,2,3,NULL,'\0','\0','2'),(45,'/BN/20100101-3-001/Credit/scan0011.tif',NULL,2,3,NULL,'\0','\0','2'),(47,'/HK/20180101-2-003/Normal Purchase/Scan0001.tif',NULL,3,1,NULL,'\0','\0','1'),(48,'/BN/20100101-2-001/Airline/scan0001-5.tif',NULL,5,2,NULL,'\0','\0','1'),(49,'/BN/20100101-2-001/Airline/scan0002.tif',NULL,5,2,NULL,'\0','\0','1'),(50,'/BN/20100101-2-001/Airline/scan0003.tif',NULL,5,2,NULL,'\0','\0','1'),(51,'/BN/20100101-2-001/Airline/scan0004-10.tif',NULL,5,2,NULL,'\0','\0','1'),(52,'/BN/20100101-2-001/Airline/scan0010-10.tif',NULL,5,2,NULL,'\0','\0','1'),(53,'/BN/20100101-2-001/Airline/scan0011.tif',NULL,5,2,NULL,'\0','\0','1'),(55,'/BN/20100101-2-001/Credit/scan0001-5.tif',NULL,5,3,18,'','\0','3'),(56,'/BN/20100101-2-001/Credit/scan0002.tif',NULL,5,3,18,'\0','\0','3'),(57,'/BN/20100101-2-001/Credit/scan0003.tif',NULL,5,3,18,'\0','\0','3'),(58,'/BN/20100101-2-001/Credit/scan0004-10.tif',NULL,5,3,18,'\0','\0','3'),(59,'/BN/20100101-2-001/Credit/scan0010-10.tif',NULL,5,3,18,'\0','\0','3'),(60,'/BN/20100101-2-001/Credit/scan0011.tif',NULL,5,3,18,'\0','\0','3'),(61,'/HK/20180101-2-003/VI/Scan0001.tif',NULL,3,6,4,'','','3'),(62,'/BN/20100101-2-001/Airline Credit/scan0001-5.tif',NULL,5,5,8,'','','3'),(63,'/BN/20100101-2-001/Airline Credit/scan0002.tif',NULL,5,5,8,'\0','','3'),(64,'/BN/20100101-2-001/Airline Credit/scan0003.tif',NULL,5,5,9,'','','3'),(65,'/BN/20100101-2-001/Airline Credit/scan0004-10.tif',NULL,5,5,9,'\0','','3'),(66,'/BN/20100101-2-001/Airline Credit/scan0010-10.tif',NULL,5,5,9,'\0','','3'),(67,'/BN/20100101-2-001/Airline Credit/scan0011.tif',NULL,5,5,9,'\0','','3'),(69,'/BN/20100101-2-001/Cash Advance/scan0001-5.tif',NULL,5,4,10,'','','3'),(70,'/BN/20100101-2-001/Cash Advance/scan0002.tif',NULL,5,4,10,'\0','','3'),(71,'/BN/20100101-2-001/Cash Advance/scan0003.tif',NULL,5,4,11,'','','3'),(72,'/BN/20100101-2-001/Cash Advance/scan0004-10.tif',NULL,5,4,11,'\0','','3'),(73,'/BN/20100101-2-001/Cash Advance/scan0010-10.tif',NULL,5,4,11,'\0','','3'),(74,'/BN/20100101-2-001/Cash Advance/scan0011.tif',NULL,5,4,11,'\0','','3'),(76,'/BN/20100101-2-001/Normal Purchase/scan0001-5.tif',NULL,5,1,12,'','','3'),(77,'/BN/20100101-2-001/Normal Purchase/scan0002.tif',NULL,5,1,12,'\0','','3'),(78,'/BN/20100101-2-001/Normal Purchase/scan0003.tif',NULL,5,1,13,'','','3'),(79,'/BN/20100101-2-001/Normal Purchase/scan0004-10.tif',NULL,5,1,13,'\0','','3'),(80,'/BN/20100101-2-001/Normal Purchase/scan0010-10.tif',NULL,5,1,13,'\0','','3'),(81,'/BN/20100101-2-001/Normal Purchase/scan0011.tif',NULL,5,1,13,'\0','','3'),(83,'/PH/20100101-1-001/Airline Credit/Scan0001.tif',NULL,4,5,17,'','','3'),(84,'/PH/20100101-1-001/Airline Credit/Scan0003.tif',NULL,4,5,17,'\0','','3');
+INSERT INTO `image` VALUES (1,'/BN/20100101-1-001/Airline/scan0001-5.tif',NULL,1,2,1,'','','3'),(2,'/BN/20100101-1-001/Airline/scan0002.tif',NULL,1,2,1,'\0','','3'),(3,'/BN/20100101-1-001/Airline/scan0003.tif',NULL,1,2,2,'','','3'),(4,'/BN/20100101-1-001/Airline/scan0004-10.tif',NULL,1,2,2,'\0','','3'),(5,'/BN/20100101-1-001/Airline/scan0010-10.tif',NULL,1,2,3,'','','3'),(6,'/BN/20100101-1-001/Airline/scan0011.tif',NULL,1,2,3,'\0','','3'),(26,'/BN/20100101-1-001/Credit/scan0001-5.tif',NULL,1,3,5,'','','3'),(27,'/BN/20100101-1-001/Credit/scan0002.tif',NULL,1,3,5,'\0','','3'),(28,'/BN/20100101-1-001/Credit/scan0003.tif',NULL,1,3,6,'','','3'),(29,'/BN/20100101-1-001/Credit/scan0004-10.tif',NULL,1,3,6,'\0','','3'),(30,'/BN/20100101-1-001/Credit/scan0010-10.tif',NULL,1,3,6,'\0','','3'),(31,'/BN/20100101-1-001/Credit/scan0011.tif',NULL,1,3,7,'','','3'),(33,'/BN/20100101-3-001/Airline/scan0001-5.tif',NULL,2,2,14,'','','3'),(34,'/BN/20100101-3-001/Airline/scan0002.tif',NULL,2,2,14,'\0','','3'),(35,'/BN/20100101-3-001/Airline/scan0003.tif',NULL,2,2,15,'','','3'),(36,'/BN/20100101-3-001/Airline/scan0004-10.tif',NULL,2,2,15,'\0','','3'),(37,'/BN/20100101-3-001/Airline/scan0010-10.tif',NULL,2,2,15,'\0','','3'),(38,'/BN/20100101-3-001/Airline/scan0011.tif',NULL,2,2,16,'','','3'),(40,'/BN/20100101-3-001/Credit/scan0001-5.tif',NULL,2,3,NULL,'\0',NULL,'2'),(41,'/BN/20100101-3-001/Credit/scan0002.tif',NULL,2,3,NULL,'\0',NULL,'2'),(42,'/BN/20100101-3-001/Credit/scan0003.tif',NULL,2,3,NULL,'\0',NULL,'2'),(43,'/BN/20100101-3-001/Credit/scan0004-10.tif',NULL,2,3,NULL,'\0',NULL,'2'),(44,'/BN/20100101-3-001/Credit/scan0010-10.tif',NULL,2,3,NULL,'\0',NULL,'2'),(45,'/BN/20100101-3-001/Credit/scan0011.tif',NULL,2,3,NULL,'\0',NULL,'2'),(47,'/HK/20180101-2-003/Normal Purchase/Scan0001.tif',NULL,3,1,NULL,'\0',NULL,'1'),(48,'/BN/20100101-2-001/Airline/scan0001-5.tif',NULL,5,2,NULL,'\0',NULL,'1'),(49,'/BN/20100101-2-001/Airline/scan0002.tif',NULL,5,2,NULL,'\0',NULL,'1'),(50,'/BN/20100101-2-001/Airline/scan0003.tif',NULL,5,2,NULL,'\0',NULL,'1'),(51,'/BN/20100101-2-001/Airline/scan0004-10.tif',NULL,5,2,NULL,'\0',NULL,'1'),(52,'/BN/20100101-2-001/Airline/scan0010-10.tif',NULL,5,2,NULL,'\0',NULL,'1'),(53,'/BN/20100101-2-001/Airline/scan0011.tif',NULL,5,2,NULL,'\0',NULL,'1'),(55,'/BN/20100101-2-001/Credit/scan0001-5.tif',NULL,5,3,NULL,'',NULL,'3'),(56,'/BN/20100101-2-001/Credit/scan0002.tif',NULL,5,3,NULL,'\0',NULL,'3'),(57,'/BN/20100101-2-001/Credit/scan0003.tif',NULL,5,3,NULL,'\0',NULL,'3'),(58,'/BN/20100101-2-001/Credit/scan0004-10.tif',NULL,5,3,NULL,'\0',NULL,'3'),(59,'/BN/20100101-2-001/Credit/scan0010-10.tif',NULL,5,3,NULL,'\0',NULL,'3'),(60,'/BN/20100101-2-001/Credit/scan0011.tif',NULL,5,3,NULL,'\0',NULL,'3'),(61,'/HK/20180101-2-003/VI/Scan0001.tif',NULL,3,6,4,'','','3'),(62,'/BN/20100101-2-001/Airline Credit/scan0001-5.tif',NULL,5,5,8,'','','3'),(63,'/BN/20100101-2-001/Airline Credit/scan0002.tif',NULL,5,5,8,'\0','','3'),(64,'/BN/20100101-2-001/Airline Credit/scan0003.tif',NULL,5,5,9,'','','3'),(65,'/BN/20100101-2-001/Airline Credit/scan0004-10.tif',NULL,5,5,9,'\0','','3'),(66,'/BN/20100101-2-001/Airline Credit/scan0010-10.tif',NULL,5,5,9,'\0','','3'),(67,'/BN/20100101-2-001/Airline Credit/scan0011.tif',NULL,5,5,9,'\0','','3'),(69,'/BN/20100101-2-001/Cash Advance/scan0001-5.tif',NULL,5,4,10,'','','3'),(70,'/BN/20100101-2-001/Cash Advance/scan0002.tif',NULL,5,4,10,'\0','','3'),(71,'/BN/20100101-2-001/Cash Advance/scan0003.tif',NULL,5,4,11,'','','3'),(72,'/BN/20100101-2-001/Cash Advance/scan0004-10.tif',NULL,5,4,11,'\0','','3'),(73,'/BN/20100101-2-001/Cash Advance/scan0010-10.tif',NULL,5,4,11,'\0','','3'),(74,'/BN/20100101-2-001/Cash Advance/scan0011.tif',NULL,5,4,11,'\0','','3'),(76,'/BN/20100101-2-001/Normal Purchase/scan0001-5.tif',NULL,5,1,12,'','','3'),(77,'/BN/20100101-2-001/Normal Purchase/scan0002.tif',NULL,5,1,12,'\0','','3'),(78,'/BN/20100101-2-001/Normal Purchase/scan0003.tif',NULL,5,1,13,'','','3'),(79,'/BN/20100101-2-001/Normal Purchase/scan0004-10.tif',NULL,5,1,13,'\0','','3'),(80,'/BN/20100101-2-001/Normal Purchase/scan0010-10.tif',NULL,5,1,13,'\0','','3'),(81,'/BN/20100101-2-001/Normal Purchase/scan0011.tif',NULL,5,1,13,'\0','','3'),(83,'/PH/20100101-1-001/Airline Credit/Scan0001.tif',NULL,4,5,17,'','','3'),(84,'/PH/20100101-1-001/Airline Credit/Scan0003.tif',NULL,4,5,17,'\0','','3');
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +349,7 @@ CREATE TABLE `merchant_header` (
   CONSTRAINT `fk_batch_header_pull_reason1` FOREIGN KEY (`batch_pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_merchant_header_batch1` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_merchant_header_data_entry1` FOREIGN KEY (`data_entry_id`) REFERENCES `data_entry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,6 +358,7 @@ CREATE TABLE `merchant_header` (
 
 LOCK TABLES `merchant_header` WRITE;
 /*!40000 ALTER TABLE `merchant_header` DISABLE KEYS */;
+INSERT INTO `merchant_header` VALUES (1,1,1,'0000000000000444','HK COPY PROTOTYPE               ',1,NULL,'0000123','2018-04-06',123.00,NULL),(2,2,1,'0000000000000444','HK COPY PROTOTYPE               ',1,NULL,'0000123','2018-04-06',123.00,NULL);
 /*!40000 ALTER TABLE `merchant_header` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,7 +506,7 @@ CREATE TABLE `task` (
   `name` varchar(45) NOT NULL,
   `description` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -513,7 +515,7 @@ CREATE TABLE `task` (
 
 LOCK TABLES `task` WRITE;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
-INSERT INTO `task` VALUES (1,'Indexing 1',NULL),(2,'Indexing 2',NULL),(3,'Indexing Compare',NULL),(4,'Entry 1',NULL),(5,'Verify',NULL);
+INSERT INTO `task` VALUES (1,'Indexing 1',NULL),(2,'Indexing 2',NULL),(3,'Indexing Compare',NULL),(4,'Entry 1',NULL),(5,'Verify',NULL),(6,'Balancing',NULL);
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -530,7 +532,7 @@ CREATE TABLE `transaction` (
   `sequence` tinyint(3) NOT NULL,
   `transaction_type_id` tinyint(3) unsigned NOT NULL,
   `region_code` char(2) DEFAULT NULL,
-  `card_number` varchar(19) DEFAULT NULL,
+  `card_number` binary(60) DEFAULT NULL,
   `transaction_date` date DEFAULT NULL,
   `authorization_code` char(6) DEFAULT NULL,
   `transaction_amount` decimal(9,2) DEFAULT NULL,
@@ -541,7 +543,6 @@ CREATE TABLE `transaction` (
   `commodity_code` char(4) DEFAULT NULL,
   `slip_pull_reason_id` tinyint(3) unsigned DEFAULT NULL,
   `exception_id` tinyint(2) unsigned DEFAULT NULL,
-  `variance_exception` bit(1) DEFAULT NULL,
   `other_exception_detail` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`,`merchant_header_id`,`transaction_type_id`),
   KEY `fk_transaction_merchant_header1_idx` (`merchant_header_id`),
@@ -551,7 +552,7 @@ CREATE TABLE `transaction` (
   CONSTRAINT `fk_transaction_installment_months1` FOREIGN KEY (`installment_months_id`) REFERENCES `installment_months` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_transaction_merchant_header1` FOREIGN KEY (`merchant_header_id`) REFERENCES `merchant_header` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_transaction_pull_reason1` FOREIGN KEY (`slip_pull_reason_id`) REFERENCES `pull_reason` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -560,6 +561,7 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
+INSERT INTO `transaction` VALUES (4,1,1,2,'BN','$Å∂ï¨\Á±ùh˝ Vè\ƒ\»îˇ–©\‰(±¡r∂\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL),(5,2,1,2,'BN','ÃÖ[\ÎÒèf	\Ã\◊*Úf\Z∫\◊¡\◊lW5∂,-\Áu\r™Ù\Ëj\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL);
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -624,7 +626,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-04 05:45:54',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-04 04:30:35',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-04 05:45:46',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin'),(12,'user1','user1LastName','user1FirstName','user1MiddleName','$2a$10$uarI6DvyP880qo.aITsvxOR3J73C0AsxgxZZZYWMtviwtqsFsTYp.','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM'),(13,'user2','user2LastName','user2FirstName','user2MiddleName','$2a$10$SvEEmvSpceGHWpxutePppuWgqkWyhQVyUh2bTjJQesyS6vB5B5rlm','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM');
+INSERT INTO `user` VALUES (1,'admin','admin','admin','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-05 08:05:20',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','admin'),(2,'1','Madrigalejos','Danilo','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-05 07:10:18',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','admin'),(3,'2','Villanueva','Rommel','','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-05 05:08:09',0,'2018-03-20 07:08:12','test@test.com',NULL,'ACTIVE','SYSTEM'),(4,'3','Comparer','Comparer','usertest','$2a$10$5fGrBFCJNW5xqZKL2N2eN.LY0/8Q/Dar1h3uxmOmELZCyHki4pUkq','2018-04-05 06:55:25',0,'2018-03-20 07:08:12','test@test.com','team1','ACTIVE','admin'),(12,'user1','user1LastName','user1FirstName','user1MiddleName','$2a$10$uarI6DvyP880qo.aITsvxOR3J73C0AsxgxZZZYWMtviwtqsFsTYp.','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM'),(13,'user2','user2LastName','user2FirstName','user2MiddleName','$2a$10$SvEEmvSpceGHWpxutePppuWgqkWyhQVyUh2bTjJQesyS6vB5B5rlm','2018-03-27 10:37:45',0,'2018-03-21 01:50:49','test@test.com',NULL,'ACTIVE','SYSTEM');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -702,7 +704,7 @@ CREATE TABLE `user_task` (
   KEY `fk_user_task_task1_idx` (`task_id`),
   CONSTRAINT `fk_user_task_task1` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_task_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -711,7 +713,7 @@ CREATE TABLE `user_task` (
 
 LOCK TABLES `user_task` WRITE;
 /*!40000 ALTER TABLE `user_task` DISABLE KEYS */;
-INSERT INTO `user_task` VALUES (1,2,4),(2,2,5),(3,3,4),(4,5,5);
+INSERT INTO `user_task` VALUES (1,2,4),(2,2,5),(3,3,4),(4,5,5),(5,2,6);
 /*!40000 ALTER TABLE `user_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -763,4 +765,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-04 22:18:58
+-- Dump completed on 2018-04-06 22:09:16
